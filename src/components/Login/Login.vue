@@ -12,12 +12,12 @@
             :rules="login_form_rules"
           >
             <el-form-item prop="name">
-              <el-input v-model="login_form.name">
+              <el-input v-model="login_form.name" placeholder="请输入用户名">
                 <i slot="prefix" class="el-input__icon el-icon-user"></i>
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input v-model="login_form.password" type="password">
+              <el-input v-model="login_form.password" type="password" placeholder="请输入密码">
                 <i slot="prefix" class="el-input__icon el-icon-key"></i>
               </el-input>
             </el-form-item>
@@ -125,8 +125,8 @@ export default {
         password: ""
       },
       login_form_rules: {
-        name: [{ required: true, message: "请输入用户名", trigger: "change" }],
-        password: [{ required: true, message: "请输入密码", trigger: "change" }]
+        name: [{ required: true, message: "用户名不能为空", trigger: "change" }],
+        password: [{ required: true, message: "密码不能为空", trigger: "change" }]
       }
     };
   },
