@@ -2,15 +2,21 @@
   <div class="homepage-hero-module">
     <div class="login-container">
       <div class="login-box">
-        <h1 style="margin-top:30px;color: rgba(0, 0, 0, 0.6);">云笔记/文档管理</h1>
+        <h1 style="margin-top:30px;color: rgba(0, 0, 0, 0.6);">
+          云笔记/文档管理
+        </h1>
         <div class="form-group">
-          <el-form ref="loginForm" :model="login_form" :rules="login_form">
-            <el-form-item>
+          <el-form
+            ref="loginForm"
+            :model="login_form"
+            :rules="login_form_rules"
+          >
+            <el-form-item prop="name">
               <el-input v-model="login_form.name">
                 <i slot="prefix" class="el-input__icon el-icon-user"></i>
               </el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item prop="password">
               <el-input v-model="login_form.password" type="password">
                 <i slot="prefix" class="el-input__icon el-icon-key"></i>
               </el-input>
@@ -21,7 +27,8 @@
               class="login-btn"
               icon="el-icon-switch-button"
               @click="Login('loginForm')"
-            >登陆</el-button>
+              >登陆</el-button
+            >
           </el-form>
         </div>
       </div>
@@ -29,8 +36,16 @@
 
     <div class="video-container">
       <div :style="fixStyle" class="filter"></div>
-      <video muted :style="fixStyle" autoplay loop class="fillWidth" v-on:canplay="canplay">
-        <source src="../../assets/Noted.webm" type="video/webm" />浏览器不支持 video 标签，建议升级浏览器。
+      <video
+        muted
+        :style="fixStyle"
+        autoplay
+        loop
+        class="fillWidth"
+        v-on:canplay="canplay"
+      >
+        <source src="../../assets/Noted.webm" type="video/webm" />
+        浏览器不支持 video 标签，建议升级浏览器。
       </video>
     </div>
   </div>
@@ -51,8 +66,8 @@
 
 .homepage-hero-module {
   position: relative;
-  height: 96vh;
-  overflow: hidden;
+  height: 100vh;
+  overflow-y: hidden;
 }
 .video-container {
   position: relative;
@@ -110,12 +125,8 @@ export default {
         password: ""
       },
       login_form_rules: {
-        name: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-        ],
-        password: [
-          { required: true, message: "请输入密码", trigger: "change" },
-        ]
+        name: [{ required: true, message: "请输入用户名", trigger: "change" }],
+        password: [{ required: true, message: "请输入密码", trigger: "change" }]
       }
     };
   },
@@ -124,23 +135,24 @@ export default {
       this.vedioCanPlay = true;
     },
     Login(formName) {
-      this.$refs[formName].validate((valid) => {
-          if (valid) {
-            
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      this.login_loading = true;
-      setTimeout(() => {
-        this.login_loading = false;
-        this.$message({
-          message: "用户" + this.login_form.name + "登陆成功",
-          type: "success"
-        });
-        this.$router.push("/user");
-      }, 1000);
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.login_loading = true;
+          //todo:后端接口
+          setTimeout(() => {
+            this.login_loading = false;
+            this.$message({
+              message: "用户" + this.login_form.name + "登陆成功",
+              type: "success"
+            });
+            this.$router.push("/user");
+
+          }, 1000);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     }
   },
   mounted: function() {
