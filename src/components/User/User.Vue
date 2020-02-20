@@ -62,11 +62,7 @@
         </div>
       </el-header>
       <el-main>
-        <div class="sub-pages">
-         
         <router-view />  
-        </div>
-  
       </el-main>
     </el-container>
   </el-container>
@@ -87,11 +83,6 @@
   text-align: center;
   margin-top: 40px;
   margin-bottom: 20px;
-}
-
-.sub-pages {
-  width: 100vh;
-  overflow: hidden;
 }
 
 </style>

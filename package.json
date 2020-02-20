@@ -13,9 +13,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^16.0.0",
+    "@ckeditor/ckeditor5-vue": "^1.0.1",
     "@handsontable/vue": "^4.1.1",
+    "bootstrap": "^4.4.1",
     "element-ui": "^2.13.0",
     "handsontable": "^7.4.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
