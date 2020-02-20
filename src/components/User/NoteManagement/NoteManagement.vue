@@ -36,7 +36,7 @@
                 :key="index"
                 class="note-info-box"
                 @click="CheckNoteInfoDetail(index)"
-                :style="{ 'background': note_info_box_bg[index] }"
+                :style="{ background: note_info_box_bg[index] }"
                 @mouseover="MouseOverNoteInfoBox(index)"
                 @mouseleave="MouseLeaveNoteInfoBox(index)"
               >
@@ -83,6 +83,13 @@
               </div>
             </div>
           </div>
+          <div>
+            <ckeditor
+              :editor="editor"
+              v-model="editorData"
+              :config="editorConfig"
+            ></ckeditor>
+          </div>
         </el-card>
       </el-main>
     </el-container>
@@ -90,6 +97,8 @@
 </template>
 
 <script>
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import '@ckeditor/ckeditor5-build-classic/build/translations/zh-cn';
 export default {
   name: "NoteManagement",
   data() {
@@ -98,30 +107,36 @@ export default {
       note_list: new Array(4),
       note_title: "笔记1",
       edit_note_title: false,
-      note_info_box_bg: new Array(4).fill('none')
+      note_info_box_bg: new Array(4).fill("none"),
+      editor: ClassicEditor,
+      editorData: "<p>Content of the editor.</p>",
+      editorConfig: {
+        language: 'zh-cn'
+      }
     };
   },
+  mounted() {},
   methods: {
     CheckNoteInfoDetail(index) {
       for (let i = 0; i < this.note_info_box_bg.length; i++) {
-        if (i == index) this.$set(this.note_info_box_bg,i,"#eaf0fb");
-        else this.$set(this.note_info_box_bg,i,"none");
+        if (i == index) this.$set(this.note_info_box_bg, i, "#eaf0fb");
+        else this.$set(this.note_info_box_bg, i, "none");
       }
     },
     MouseOverNoteInfoBox(index) {
-      if(this.note_info_box_bg[index] != "#eaf0fb")
-        this.$set(this.note_info_box_bg,index,"#f0f0f0");
+      if (this.note_info_box_bg[index] != "#eaf0fb")
+        this.$set(this.note_info_box_bg, index, "#f0f0f0");
     },
     MouseLeaveNoteInfoBox(index) {
-      if(this.note_info_box_bg[index] != "#eaf0fb")
-        this.$set(this.note_info_box_bg,index,"none");
+      if (this.note_info_box_bg[index] != "#eaf0fb")
+        this.$set(this.note_info_box_bg, index, "none");
     }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .note-info-box {
   padding: 12px 20px;
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.8);
@@ -143,5 +158,9 @@ export default {
 .note-title {
   font-size: 160%;
   font-weight: 600;
+}
+.ck-editor__editable {
+  min-height: 416px;
+  max-height: 416px;
 }
 </style>
