@@ -24,18 +24,29 @@
             style="margin-left: 10px;"
           ></el-button>
         </div>
-        <div class="note-info-box">
-          <div class="note-title">
-            <i class="el-icon-notebook-2"></i>
-            <span>标题</span>
-          </div>
-          <div class="note-content">
-            aasddssssssssssssssssssssssssssssssss
-          </div>
-          <div class="note-footer">
-            2020-02-20 18:26:48
+        <div class="note-list">
+          <div v-for="note in note_list" class="note-info-box">
+            <div class="note-title">
+              <i class="el-icon-notebook-2"></i>
+              <span>标题</span>
+            </div>
+            <div class="note-content">
+              aasddssssssssssssssssssssssssssssssss
+            </div>
+            <div class="note-footer">
+              2020-02-20 18:26:48
+            </div>
           </div>
         </div>
+        <el-pagination
+          style="margin: 10px 0px;"
+          small
+          background
+          layout="prev, pager, next"
+          :page-size="4"
+          :total="104"
+        >
+        </el-pagination>
       </el-card>
     </div>
   </div>
@@ -46,7 +57,8 @@ export default {
   name: "NoteManagement",
   data() {
     return {
-      note_search_content: ""
+      note_search_content: "",
+      note_list: new Array(4)
     };
   }
 };
@@ -58,8 +70,10 @@ export default {
   padding: 12px 20px;
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.8);
 }
+.note-list {
+}
 .note-title {
-  font-size:medium;
+  font-size: medium;
 }
 .note-content {
   margin: 10px 20px;
