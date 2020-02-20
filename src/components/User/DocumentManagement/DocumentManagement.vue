@@ -1,5 +1,9 @@
 <template>
-  <h1>子页面</h1>
+  <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item>客户端（普通用户）</el-breadcrumb-item>
+    <el-breadcrumb-item>个人中心</el-breadcrumb-item>
+    <el-breadcrumb-item>文档管理</el-breadcrumb-item>
+  </el-breadcrumb>
 </template>
 
 <script>

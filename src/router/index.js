@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login/Login'
 import User from '@/components/User/User'
 import DocumentManagement from '@/components/User/DocumentManagement/DocumentManagement'
+import NoteManagement from '@/components/User/NoteManagement/NoteManagement'
 
 Vue.use(Router)
 
@@ -27,7 +28,12 @@ export default new Router({
         path:'document-management',
         name:'DocumentManagement',
         component:DocumentManagement
-      }]
+      },
+    {
+      path:'note-management',
+      name:'NoteManagement',
+      component:NoteManagement
+    }]
     }
   ]
 })

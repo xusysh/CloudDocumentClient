@@ -24,7 +24,7 @@
         </el-submenu>
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-menu"></i>云笔记</template>
-          <el-menu-item index="2-1">我的笔记</el-menu-item>
+          <el-menu-item index="/user/note-management">我的笔记</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-menu"></i>云协作</template>
@@ -62,7 +62,11 @@
         </div>
       </el-header>
       <el-main>
-        <router-view /> 
+        <div class="sub-pages">
+         
+        <router-view />  
+        </div>
+  
       </el-main>
     </el-container>
   </el-container>
@@ -84,6 +88,12 @@
   margin-top: 40px;
   margin-bottom: 20px;
 }
+
+.sub-pages {
+  width: 100vh;
+  overflow: hidden;
+}
+
 </style>
 
 <script>
