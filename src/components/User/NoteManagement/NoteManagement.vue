@@ -151,7 +151,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .note-info-box {
   padding: 12px 20px;
