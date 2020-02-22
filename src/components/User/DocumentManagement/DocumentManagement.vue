@@ -8,7 +8,7 @@
       </el-breadcrumb>
     </div>
     <el-container>
-      <el-aside>
+      <el-aside style="height: 600px;overflow-y: auto;">
         <el-button
           type="primary"
           icon="el-icon-plus"
@@ -21,7 +21,7 @@
         </div>
         <el-menu class="el-menu-vertical-demo">
           <el-menu-item index="1">
-            <i class="el-icon-menu"></i>
+            <i class="el-icon-share"></i>
             <span slot="title">与我共享</span>
           </el-menu-item>
           <el-menu-item index="2">
@@ -96,13 +96,24 @@
           </el-card>
         </div>
         <el-main>
-          <el-table :data="tableData" class="cur-dir-file-table">
+          <el-table :data="tableData" class="cur-dir-file-table" height="420">
             <el-table-column prop="date" label="名称"></el-table-column>
             <el-table-column prop="name" label="创建者"></el-table-column>
             <el-table-column
               prop="address"
               label="最后修改日期"
             ></el-table-column>
+            <el-table-column label="操作" width="120px">
+              <template slot-scope="scope">
+                <el-button size="mini" circle icon="el-icon-edit"></el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  circle
+                  icon="el-icon-delete"
+                ></el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </el-main>
       </el-container>
@@ -157,6 +168,10 @@ export default {
               {
                 id: 8,
                 label: "部门通知"
+              },
+              {
+                id: 9,
+                label: "部门2通知"
               }
             ]
           }
@@ -249,6 +264,7 @@ export default {
   width: 200px;
   float: left;
   margin-right: 20px;
+  cursor: pointer;
 }
 .clearfix:before,
 .clearfix:after {
