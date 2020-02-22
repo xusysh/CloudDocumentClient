@@ -6,7 +6,7 @@
           :size="100"
           src="../../assets/default_avatar.jpg"
         ></el-avatar>
-        <h3 style="color: rgb(240, 240, 240);">用户名</h3>
+        <h3 style="color: rgb(240, 240, 240);">Admin</h3>
       </div>
       <el-menu
         router
@@ -19,7 +19,9 @@
           <template slot="title"
             ><i class="el-icon-message"></i>个人中心
           </template>
-          <el-menu-item index="/user/document-management">文档管理</el-menu-item>
+          <el-menu-item index="/user/document-management"
+            >文档管理</el-menu-item
+          >
           <el-menu-item index="1-2">用户设置</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
@@ -62,7 +64,7 @@
         </div>
       </el-header>
       <el-main>
-        <router-view />  
+        <router-view />
       </el-main>
     </el-container>
   </el-container>
@@ -84,7 +86,6 @@
   margin-top: 40px;
   margin-bottom: 20px;
 }
-
 </style>
 
 <script>
