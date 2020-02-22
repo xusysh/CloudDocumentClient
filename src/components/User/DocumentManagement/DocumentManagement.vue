@@ -9,6 +9,27 @@
     </div>
     <el-container>
       <el-aside>
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          style="width: 80%;margin-left: 10%;margin-top: 20px;"
+          >新建</el-button
+        >
+        <div style="text-align: center;margin-top: 16px;">
+          <el-progress type="circle" :percentage="25"></el-progress>
+          <div>存储文档使用：12/48</div>
+        </div>
+        <el-menu class="el-menu-vertical-demo">
+          <el-menu-item index="1">
+            <i class="el-icon-menu"></i>
+            <span slot="title">与我共享</span>
+          </el-menu-item>
+          <el-menu-item index="2">
+            <i class="el-icon-setting"></i>
+            <span slot="title">收藏</span>
+          </el-menu-item>
+        </el-menu>
+
         <div class="file-tree">
           <el-tree
             :data="data"
@@ -69,50 +90,52 @@ export default {
   data() {
     const data = [
       {
-        id: 1,
-        label: "一级 1",
+        id: 0,
+        label: "我的文档",
         children: [
           {
-            id: 4,
-            label: "二级 1-1",
+            id: 1,
+            label: "项目1文档",
             children: [
               {
-                id: 9,
-                label: "三级 1-1-1"
+                id: 4,
+                label: "微服务1",
+                children: [
+                  {
+                    id: 9,
+                    label: "需求分析"
+                  }
+                ]
               },
               {
-                id: 10,
-                label: "三级 1-1-2"
+                id: 4,
+                label: "微服务2",
+                children: [
+                  {
+                    id: 9,
+                    label: "需求分析"
+                  },
+                  {
+                    id: 10,
+                    label: "详细设计"
+                  }
+                ]
               }
             ]
-          }
-        ]
-      },
-      {
-        id: 2,
-        label: "一级 2",
-        children: [
-          {
-            id: 5,
-            label: "二级 2-1"
           },
           {
-            id: 6,
-            label: "二级 2-2"
-          }
-        ]
-      },
-      {
-        id: 3,
-        label: "一级 3",
-        children: [
-          {
-            id: 7,
-            label: "二级 3-1"
-          },
-          {
-            id: 8,
-            label: "二级 3-2"
+            id: 3,
+            label: "其他文档",
+            children: [
+              {
+                id: 7,
+                label: "汇总报表"
+              },
+              {
+                id: 8,
+                label: "部门通知"
+              }
+            ]
           }
         ]
       }
@@ -121,24 +144,39 @@ export default {
       data: JSON.parse(JSON.stringify(data)),
       tableData: [
         {
-          date: "需求文档",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          date: "xx微服务需求分析",
+          name: "admin",
+          address: "2020-02-22 19:47:14"
         },
         {
-          date: "设计文档",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          date: "xx微服务详细设计",
+          name: "admin",
+          address: "2020-02-22 19:47:14"
+        },
+        {
+          date: "金科部xx统计2020.02",
+          name: "admin",
+          address: "2020-02-22 19:47:14"
         },
         {
           date: "前后端接口",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
+          name: "郭靖宇",
+          address: "2020-02-22 19:47:14"
         },
         {
           date: "设计文档2",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
+          name: "xusysh",
+          address: "2020-02-22 19:47:14"
+        },
+        {
+          date: "simple_bot.py",
+          name: "xusysh",
+          address: "2020-02-22 19:47:14"
+        },
+        {
+          date: "run.sh",
+          name: "xusysh",
+          address: "2020-02-22 19:47:14"
         }
       ]
     };
@@ -180,7 +218,7 @@ export default {
   color: rgb(160, 200, 200);
 }
 .file-tree {
-  margin-top: 20px;
+  margin-top: 10px;
   padding-left: 20px;
   padding-right: 10px;
 }
