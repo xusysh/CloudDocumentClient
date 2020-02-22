@@ -128,10 +128,6 @@ export default {
             label: "其他文档",
             children: [
               {
-                id: 7,
-                label: "汇总报表"
-              },
-              {
                 id: 8,
                 label: "部门通知"
               }
