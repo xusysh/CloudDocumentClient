@@ -58,13 +58,40 @@
           <h4 style="margin-top: 20px;">最近浏览</h4>
         </el-header>
         <div class="recent-file-block">
-          <el-card v-for="i in 4" :key="i" class="box-card" shadow="hover">
+          <el-card class="box-card" shadow="hover">
             <img
               src="../../../assets/icons/excel.svg"
               style="display:block;width:20px;height:40px;float: left;margin-top: -6px;margin-right: 6px;"
             />
             <div class="recent-file-name">
-              myexcel.xlsx
+              资产负债表.xlsx
+            </div>
+          </el-card>
+          <el-card class="box-card" shadow="hover">
+            <img
+              src="../../../assets/icons/word.svg"
+              style="display:block;width:20px;height:40px;float: left;margin-top: -6px;margin-right: 6px;"
+            />
+            <div class="recent-file-name">
+              微服务平台需求设计.docx
+            </div>
+          </el-card>
+          <el-card class="box-card" shadow="hover">
+            <img
+              src="../../../assets/icons/excel.svg"
+              style="display:block;width:20px;height:40px;float: left;margin-top: -6px;margin-right: 6px;"
+            />
+            <div class="recent-file-name">
+              金科部情况汇总.xlsx
+            </div>
+          </el-card>
+          <el-card class="box-card" shadow="hover">
+            <img
+              src="../../../assets/icons/word.svg"
+              style="display:block;width:20px;height:40px;float: left;margin-top: -6px;margin-right: 6px;"
+            />
+            <div class="recent-file-name">
+              总结报告.docx
             </div>
           </el-card>
         </div>
