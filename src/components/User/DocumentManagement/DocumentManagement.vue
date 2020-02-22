@@ -12,7 +12,6 @@
         <div class="file-tree">
           <el-tree
             :data="data"
-            show-checkbox
             node-key="id"
             default-expand-all
             :expand-on-click-node="false"
@@ -34,18 +33,28 @@
         </div>
       </el-aside>
       <el-container>
-        <el-header style="background: none;">
+        <el-header style="background: none;height: fit-content;">
           <h4 style="margin-top: 20px;">最近浏览</h4>
         </el-header>
-        <el-divider>当前目录</el-divider>
-        <el-main style="margin-top: -20px;">
-          <el-table :data="tableData" style="width: 100%">
-            <el-table-column prop="date" label="名称" width="180">
-            </el-table-column>
-            <el-table-column prop="name" label="创建者" width="180">
-            </el-table-column>
-            <el-table-column prop="address" label="最后修改日期">
-            </el-table-column>
+        <div class="recent-file-block">
+          <el-card v-for="i in 4" :key="i" class="box-card" shadow="hover">
+            <img
+              src="../../../assets/icons/excel.svg"
+              style="display:block;width:20px;height:40px;float: left;margin-top: -6px;margin-right: 6px;"
+            />
+            <div class="recent-file-name">
+              myexcel.xlsx
+            </div>
+          </el-card>
+        </div>
+        <el-main>
+          <el-table :data="tableData" class="cur-dir-file-table">
+            <el-table-column prop="date" label="名称"></el-table-column>
+            <el-table-column prop="name" label="创建者"></el-table-column>
+            <el-table-column
+              prop="address"
+              label="最后修改日期"
+            ></el-table-column>
           </el-table>
         </el-main>
       </el-container>
@@ -172,6 +181,36 @@ export default {
 }
 .file-tree {
   margin-top: 20px;
+  padding-left: 20px;
   padding-right: 10px;
+}
+.box-card {
+  width: 200px;
+  float: left;
+  margin-right: 20px;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+.recent-file-block {
+  margin-left: 40px;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+.cur-dir-file-table {
+  width: 100%;
+  border-top: 1px solid grey;
+  padding-top: 16px;
+}
+.recent-file-name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
 }
 </style>
