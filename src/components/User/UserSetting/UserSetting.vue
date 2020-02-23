@@ -32,7 +32,7 @@
       label-width="100px"
       class="demo-ruleForm"
     >
-      <el-form-item label="昵称" prop="petName">
+      <el-form-item label="用户名" prop="petName">
         <el-input v-model="ruleForm.petName" :placeholder="userName"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="pass">
@@ -103,9 +103,9 @@ export default {
         petName: ""
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        petName: [{ validator: checkPetName, trigger: "blur" }]
+        pass: [{ validator: validatePass, trigger: "change" }],
+        checkPass: [{ validator: validatePass2, trigger: "change" }],
+        petName: [{ validator: checkPetName, trigger: "change" }]
       }
     };
   },

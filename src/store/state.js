@@ -1,5 +1,5 @@
 export default {
-  userAvaster:'',
-  password:'12345678',
-  userName:'kky25',
-}
+  userAvaster: "",
+  password: "",
+  userName: ""
+};
