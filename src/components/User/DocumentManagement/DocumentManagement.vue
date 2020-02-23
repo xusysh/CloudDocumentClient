@@ -136,21 +136,21 @@ export default {
             label: "项目1文档",
             children: [
               {
-                id: 4,
+                id: 2,
                 label: "微服务1",
                 children: [
                   {
-                    id: 9,
+                    id: 5,
                     label: "需求分析"
                   }
                 ]
               },
               {
-                id: 4,
+                id: 3,
                 label: "微服务2",
                 children: [
                   {
-                    id: 9,
+                    id: 6,
                     label: "需求分析"
                   },
                   {
@@ -162,16 +162,12 @@ export default {
             ]
           },
           {
-            id: 3,
+            id: 4,
             label: "其他文档",
             children: [
               {
                 id: 8,
                 label: "部门通知"
-              },
-              {
-                id: 9,
-                label: "部门2通知"
               }
             ]
           }

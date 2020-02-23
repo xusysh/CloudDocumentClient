@@ -8,6 +8,9 @@ import "element-ui/lib/theme-chalk/index.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.css";
 import CKEditor from "@CKEditor/ckeditor5-vue";
+import store from "./store/index";
+import axios from "axios";
+Vue.prototype.$axios = axios;
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
@@ -18,5 +21,6 @@ new Vue({
   el: "#app",
   router,
   components: { App },
-  template: "<App/>"
+  template: "<App/>",
+  store
 });

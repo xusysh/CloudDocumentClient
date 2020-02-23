@@ -22,7 +22,7 @@
           <el-menu-item index="/user/document-management"
             >文档管理</el-menu-item
           >
-          <el-menu-item index="1-2">用户设置</el-menu-item>
+          <el-menu-item index="/user/user-setting">用户设置</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-menu"></i>云笔记</template>
