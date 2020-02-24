@@ -17,7 +17,11 @@
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input v-model="login_form.password" type="password" placeholder="请输入密码">
+              <el-input
+                v-model="login_form.password"
+                type="password"
+                placeholder="请输入密码"
+              >
                 <i slot="prefix" class="el-input__icon el-icon-key"></i>
               </el-input>
             </el-form-item>
@@ -126,8 +130,12 @@ export default {
         password: ""
       },
       login_form_rules: {
-        name: [{ required: true, message: "用户名不能为空", trigger: "change" }],
-        password: [{ required: true, message: "密码不能为空", trigger: "change" }]
+        name: [
+          { required: true, message: "用户名不能为空", trigger: "change" }
+        ],
+        password: [
+          { required: true, message: "密码不能为空", trigger: "change" }
+        ]
       }
     };
   },
@@ -146,8 +154,13 @@ export default {
               message: "用户" + this.login_form.name + "登陆成功",
               type: "success"
             });
+            let userInfo = {
+              password: this.login_form.name,
+              userName: this.login_form.password,
+              userAvaster: ""
+            };
+            this.$store.dispatch("saveUserInfo", userInfo);
             this.$router.push("/user");
-
           }, 1000);
         } else {
           console.log("error submit!!");

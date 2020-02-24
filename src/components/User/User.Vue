@@ -2,11 +2,8 @@
   <el-container style="height: 100vh; border: 1px solid #eee">
     <el-aside width="240px" style="background-color:#545c64">
       <div class="avatar-block">
-        <el-avatar
-          :size="100"
-          src="../../assets/default_avatar.jpg"
-        ></el-avatar>
-        <h3 style="color: rgb(240, 240, 240);">Admin</h3>
+        <el-avatar :size="100" :src="info.userAvaster"></el-avatar>
+        <h3 style="color: rgb(240, 240, 240);">{{ info.userName }}</h3>
       </div>
       <el-menu
         router
@@ -89,12 +86,25 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "User",
   data() {
     return {
+      info: {},
       input_search: ""
     };
+  },
+  created() {
+    this.onLoad();
+  },
+  methods: {
+    onLoad() {
+      this.info = this.$store.state.userInfo;
+    }
+  },
+  computed: {
+    ...mapState["userInfo"]
   }
 };
 </script>

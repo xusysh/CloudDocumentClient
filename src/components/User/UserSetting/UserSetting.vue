@@ -143,9 +143,9 @@ export default {
         checkPass: ""
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        petName: [{ validator: checkPetName, trigger: "blur" }]
+        pass: [{ validator: validatePass, trigger: "change" }],
+        checkPass: [{ validator: validatePass2, trigger: "change" }],
+        petName: [{ validator: checkPetName, trigger: "change" }]
       }
     };
   },

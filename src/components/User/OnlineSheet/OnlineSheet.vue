@@ -9,6 +9,7 @@
     </div>
     <div>
       <hot-table
+        ref="hotTableComponent"
         :settings="hotSettings"
         licenseKey="non-commercial-and-evaluation"
       ></hot-table>
@@ -50,16 +51,15 @@ export default {
     };
   },
   mounted() {
-    /*  let emm = Handsontable.helper.createSpreadsheetData(16, 26);
-    console.log(emm);   */
+    //  this.$refs.hotTableComponent.hotInstance.loadData([["new", "data"]]);
   },
   components: {
     HotTable,
     HotColumn
   },
   methods: {
-    LoadData() {},
-    SaveData() {}
+    ImportSheetData() {},
+    ExportSheetData() {}
   }
 };
 </script>
