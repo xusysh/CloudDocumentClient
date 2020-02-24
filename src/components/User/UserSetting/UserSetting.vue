@@ -1,61 +1,99 @@
 <template>
-  <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item>客户端（普通用户）</el-breadcrumb-item>
-      <el-breadcrumb-item>个人中心</el-breadcrumb-item>
-      <el-breadcrumb-item>用户设置</el-breadcrumb-item>
-    </el-breadcrumb>
-
-    <h1>账号设置</h1>
-
-    <el-row class="el-row">
-      <el-col :span="6" class="el-col"></el-col>
-      <el-col :span="6">
-        <h3>修改头像</h3>
-        <el-upload
-          class="avatar-uploader"
-          action="#"
-          :show-file-list="false"
-          :before-upload="storeImg"
-        >
-          <img v-if="userAvaster" :src="userAvaster" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </el-col>
-    </el-row>
-
-    <el-form
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      ref="ruleForm"
-      label-width="100px"
-      class="demo-ruleForm"
-    >
-      <el-form-item label="用户名" prop="petName">
-        <el-input v-model="ruleForm.petName" :placeholder="userName"></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="pass">
-        <el-input
-          type="password"
-          v-model="ruleForm.pass"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input
-          type="password"
-          v-model="ruleForm.checkPass"
-          autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
-          >提交</el-button
-        >
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
+  <div class="card" style="height: 86vh;">
+    <div class="card-header">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>客户端（普通用户）</el-breadcrumb-item>
+        <el-breadcrumb-item>个人中心</el-breadcrumb-item>
+        <el-breadcrumb-item>用户设置</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div>
+      <el-row class="el-row">
+        <el-col :span="6" class="el-col">&nbsp;</el-col>
+        <el-col :span="6">
+          <h3>修改头像</h3>
+          <el-upload
+            class="avatar-uploader"
+            action="#"
+            :show-file-list="false"
+            :before-upload="storeImg"
+          >
+            <img v-if="userAvaster" :src="userAvaster" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">&nbsp;</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">&nbsp;</el-col>
+        <el-col :span="12">
+          <h3>修改昵称</h3>
+          <el-form
+            :model="nameForm"
+            label-position="left"
+            status-icon
+            :rules="rules"
+            ref="nameForm"
+            label-width="100px"
+            class="demo-nameForm"
+          >
+            <el-form-item label="昵称" prop="petName">
+              <el-input
+                v-model="nameForm.petName"
+                :placeholder="userName"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('nameForm')"
+                >提交</el-button
+              >
+              <el-button @click="resetForm('nameForm')">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">&nbsp;</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">&nbsp;</el-col>
+        <el-col :span="12">
+          <h3>修改密码</h3>
+          <el-form
+            :model="ruleForm"
+            label-position="left"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="新密码" prop="pass">
+              <el-input
+                type="password"
+                v-model="ruleForm.pass"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input
+                type="password"
+                v-model="ruleForm.checkPass"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')"
+                >提交</el-button
+              >
+              <el-button @click="resetForm('ruleForm')">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -97,15 +135,17 @@ export default {
       }
     };
     return {
-      ruleForm: {
-        pass: "",
-        checkPass: "",
+      nameForm: {
         petName: ""
       },
+      ruleForm: {
+        pass: "",
+        checkPass: ""
+      },
       rules: {
-        pass: [{ validator: validatePass, trigger: "change" }],
-        checkPass: [{ validator: validatePass2, trigger: "change" }],
-        petName: [{ validator: checkPetName, trigger: "change" }]
+        pass: [{ validator: validatePass, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        petName: [{ validator: checkPetName, trigger: "blur" }]
       }
     };
   },
@@ -117,7 +157,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios
-            .post("", {
+            .post("/userInfo/changeInfo", {
               name: this.userName,
               password: this.ruleForm.pass
             })
@@ -151,7 +191,7 @@ export default {
           url = window.webkitURL.createObjectURL(file);
         }
         this.$axios
-          .post("", {
+          .post("/userInfo/changeImg", {
             name: this.userName,
             imgUrl: url
           })

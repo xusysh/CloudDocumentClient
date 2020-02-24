@@ -6,6 +6,7 @@ import User from "@/components/User/User";
 import DocumentManagement from "@/components/User/DocumentManagement/DocumentManagement";
 import NoteManagement from "@/components/User/NoteManagement/NoteManagement";
 import UserSetting from "@/components/User/UserSetting/UserSetting";
+import OnlineSheet from "@/components/User/OnlineSheet/OnlineSheet";
 
 Vue.use(Router);
 
@@ -24,6 +25,7 @@ export default new Router({
     {
       path: "/user",
       name: "User",
+      redirect: "/user/document-management",
       component: User,
       children: [
         {
@@ -40,6 +42,11 @@ export default new Router({
           path: "user-setting",
           name: "UserSetting",
           component: UserSetting
+        },
+        {
+          path: "online-sheet",
+          name: "OnlineSheet",
+          component: OnlineSheet
         }
       ]
     }

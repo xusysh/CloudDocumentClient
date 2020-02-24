@@ -29,9 +29,9 @@
           <el-menu-item index="/user/note-management">我的笔记</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
-          <template slot="title"><i class="el-icon-menu"></i>云协作</template>
-          <el-menu-item index="3-1">云表格</el-menu-item>
-          <el-menu-item index="3-2">云文档</el-menu-item>
+          <template slot="title"><i class="el-icon-menu"></i>在线协作</template>
+          <el-menu-item index="/user/online-sheet">在线表格</el-menu-item>
+          <el-menu-item index="3-2">在线文档</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>
