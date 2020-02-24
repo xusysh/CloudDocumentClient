@@ -13,8 +13,21 @@
           src="../../../assets/icons/excel.svg"
           style="display:block;width:28px;height:60px;float: left;margin-left: 10px;margin-right: 10px;margin-top: -10px;"
         />
-        <div style="font-size: 160%;font-weight: 500;margin-top: 6px;">
-          文件名
+        <div style="margin-top: 6px;">
+          <span style="font-size: 160%;font-weight: 500;float: left;"
+            >文件名</span
+          >
+          <div
+            style="font-size: 150%;float: left;margin-top: 2px;margin-left: 10px;"
+          >
+            <el-tooltip effect="dark" content="收藏">
+              <i class="el-icon-star-off"></i>
+            </el-tooltip>
+            <el-tooltip effect="dark" content="移动">
+              <i class="el-icon-folder-opened"></i>
+            </el-tooltip>
+          </div>
+          <div style="height: 40px;">&nbsp;</div>
         </div>
       </div>
       <div class="sheet-control-menu">
@@ -81,7 +94,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .online-file-menu {
-  background: fixed;
   width: 100%;
 }
 .file-control-menu {
