@@ -2,26 +2,16 @@
   <div class="homepage-hero-module">
     <div class="login-container">
       <div class="login-box">
-        <h1 style="margin-top:30px;color: rgba(0, 0, 0, 0.6);">
-          云笔记/文档管理
-        </h1>
+        <h1 style="margin-top:30px;color: rgba(0, 0, 0, 0.6);">云笔记/文档管理</h1>
         <div class="form-group">
-          <el-form
-            ref="loginForm"
-            :model="login_form"
-            :rules="login_form_rules"
-          >
+          <el-form ref="loginForm" :model="login_form" :rules="login_form_rules">
             <el-form-item prop="name">
               <el-input v-model="login_form.name" placeholder="请输入用户名">
                 <i slot="prefix" class="el-input__icon el-icon-user"></i>
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input
-                v-model="login_form.password"
-                type="password"
-                placeholder="请输入密码"
-              >
+              <el-input v-model="login_form.password" type="password" placeholder="请输入密码">
                 <i slot="prefix" class="el-input__icon el-icon-key"></i>
               </el-input>
             </el-form-item>
@@ -31,8 +21,7 @@
               class="login-btn"
               icon="el-icon-switch-button"
               @click="Login('loginForm')"
-              >登陆</el-button
-            >
+            >登陆</el-button>
           </el-form>
         </div>
       </div>
@@ -40,16 +29,8 @@
 
     <div class="video-container">
       <div :style="fixStyle" class="filter"></div>
-      <video
-        muted
-        :style="fixStyle"
-        autoplay
-        loop
-        class="fillWidth"
-        v-on:canplay="canplay"
-      >
-        <source src="../../assets/Noted.webm" type="video/webm" />
-        浏览器不支持 video 标签，建议升级浏览器。
+      <video muted :style="fixStyle" autoplay loop class="fillWidth" v-on:canplay="canplay">
+        <source src="../../assets/Noted.webm" type="video/webm" />浏览器不支持 video 标签，建议升级浏览器。
       </video>
     </div>
   </div>
@@ -152,24 +133,30 @@ export default {
               username: this.login_form.name,
               password: this.login_form.password
             })
-            .then(function(resp) {
+            .then(resp => {
               console.log(resp);
+              this.login_loading = false;
+              if (resp.data.status != 200) {
+                this.$message({
+                  message: "登陆失败：" + resp.data.msg,
+                  type: "error"
+                });
+                return;
+              }
+              this.$message({
+                message: "用户" + this.login_form.name + "登陆成功",
+                type: "success"
+              });
+              this.$store.dispatch("saveUserInfo", userInfo);
+              this.$router.push("/user");
             })
-            .catch(function(err) {});
-          setTimeout(() => {
-            this.login_loading = false;
-            this.$message({
-              message: "用户" + this.login_form.name + "登陆成功",
-              type: "success"
+            .catch(err => {
+              this.login_loading = false;
+              this.$message({
+                message: "登陆失败，服务器连接异常",
+                type: "error"
+              });
             });
-            let userInfo = {
-              password: this.login_form.name,
-              userName: this.login_form.password,
-              userAvaster: ""
-            };
-            this.$store.dispatch("saveUserInfo", userInfo);
-            this.$router.push("/user");
-          }, 1000);
         } else {
           console.log("error submit!!");
           return false;
