@@ -7,6 +7,20 @@
         <el-breadcrumb-item>在线表格</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
+    <div class="online-file-menu">
+      <div class="file-control-menu;">
+        <img
+          src="../../../assets/icons/excel.svg"
+          style="display:block;width:28px;height:60px;float: left;margin-left: 10px;margin-right: 10px;margin-top: -10px;"
+        />
+        <div style="font-size: 160%;font-weight: 500;margin-top: 6px;">
+          文件名
+        </div>
+      </div>
+      <div class="sheet-control-menu">
+        qwe
+      </div>
+    </div>
     <div>
       <hot-table
         ref="hotTableComponent"
@@ -20,6 +34,7 @@
 <script>
 import { HotTable, HotColumn } from "@handsontable/vue";
 import Handsontable from "handsontable";
+import "handsontable/languages/zh-CN";
 
 export default {
   name: "OnlineSheet",
@@ -29,24 +44,23 @@ export default {
         data: Handsontable.helper.createSpreadsheetData(26, 26),
         colHeaders: true,
         rowHeaders: true,
-        height: 600,
-        contextMenu: {
-          items: {
-            row_above: {
-              name: "在上方插入一行"
-            },
-            row_below: {
-              name: "在下方插入一行"
-            },
-            separator: Handsontable.plugins.ContextMenu.SEPARATOR,
-            clear_custom: {
-              name: "清空所有单元格",
-              callback: function() {
-                this.clear();
-              }
-            }
-          }
-        }
+        height: 480,
+        language: "zh-CN", //声明用中文的语言包
+        contextMenu: [
+          "row_above",
+          "row_below",
+          "col_left",
+          "col_right",
+          "---------",
+          "remove_row",
+          "remove_col",
+          "---------",
+          "alignment",
+          "copy",
+          "cut",
+          "mergeCells"
+        ],
+        dropdownMenu: true
       }
     };
   },
@@ -65,23 +79,18 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1,
-h2 {
-  font-weight: normal;
+<style>
+.online-file-menu {
+  background: fixed;
+  width: 100%;
 }
-
-ul {
-  list-style-type: none;
-  padding: 0;
+.file-control-menu {
+  width: 100%;
 }
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+.sheet-control-menu {
+  width: 100%;
+  margin-top: 6px;
+  border-top: 0.5px solid rgba(128, 128, 128, 0.8);
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.8);
 }
 </style>

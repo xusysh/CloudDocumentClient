@@ -147,7 +147,15 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.login_loading = true;
-          //todo:后端接口
+          this.$axios
+            .post("http://106.54.236.110:8000/user/login", {
+              username: this.login_form.name,
+              password: this.login_form.password
+            })
+            .then(function(resp) {
+              console.log(resp);
+            })
+            .catch(function(err) {});
           setTimeout(() => {
             this.login_loading = false;
             this.$message({
