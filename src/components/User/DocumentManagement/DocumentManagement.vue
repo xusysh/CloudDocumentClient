@@ -9,12 +9,16 @@
     </div>
     <el-container>
       <el-aside style="height: 600px;overflow-y: auto;">
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          style="width: 80%;margin-left: 10%;margin-top: 20px;"
-          >新建</el-button
-        >
+        <el-dropdown style=" width: 80%;margin-left: 10%;margin-top: 20px;">
+          <el-button type="primary" icon="el-icon-plus" style=" width: 100%;"
+            >新建</el-button
+          >
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>云表格</el-dropdown-item>
+            <el-dropdown-item>云文档</el-dropdown-item>
+            <el-dropdown-item>从本地上传</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <div style="text-align: center;margin-top: 16px;">
           <el-progress type="circle" :percentage="25"></el-progress>
           <div>存储文档使用：12/48</div>
