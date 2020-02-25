@@ -2,8 +2,8 @@
   <el-container style="height: 100vh; border: 1px solid #eee">
     <el-aside width="240px" style="background-color:#545c64">
       <div class="avatar-block">
-        <el-avatar :size="100" :src="info.userAvaster"></el-avatar>
-        <h3 style="color: rgb(240, 240, 240);">{{ info.userName }}</h3>
+        <el-avatar :size="100" :src="info.img_url"></el-avatar>
+        <h3 style="color: rgb(240, 240, 240);">{{ info.name }}</h3>
       </div>
       <el-menu
         router
@@ -28,7 +28,7 @@
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-menu"></i>在线协作</template>
           <el-menu-item index="/user/online-sheet">在线表格</el-menu-item>
-          <el-menu-item index="3-2">在线文档</el-menu-item>
+          <el-menu-item index="3-2" disabled>在线文档</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>

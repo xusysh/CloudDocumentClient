@@ -1,7 +1,7 @@
 export default {
   userInfo: {
-    userAvaster: "",
+    img_url: "",
     password: "",
-    userName: ""
+    name: ""
   }
 };

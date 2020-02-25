@@ -134,7 +134,7 @@ export default {
               password: this.login_form.password
             })
             .then(resp => {
-              console.log(resp);
+              let response = resp.data;
               this.login_loading = false;
               if (resp.data.status != 200) {
                 this.$message({
@@ -147,6 +147,8 @@ export default {
                 message: "用户" + this.login_form.name + "登陆成功",
                 type: "success"
               });
+              let userInfo = JSON.parse(response.data);
+              userInfo.id = userInfo._id.$oid;
               this.$store.dispatch("saveUserInfo", userInfo);
               this.$router.push("/user");
             })
