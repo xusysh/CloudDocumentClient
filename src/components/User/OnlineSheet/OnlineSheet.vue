@@ -114,11 +114,102 @@
               <el-dropdown-item>导出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-
+          <div style="float: left;margin-top: 6px;margin-left: 50px;">
+            <div>
+              <div class="sheet-control-icon-bg">
+                <img
+                  src="../../../assets/icons/undo.svg"
+                  class="sheet-control-icon"
+                />
+              </div>
+              <div class="sheet-control-icon-bg">
+                <img
+                  src="../../../assets/icons/redo.svg"
+                  class="sheet-control-icon"
+                />
+              </div>
+              <div class="sheet-control-icon-bg">
+                <img
+                  src="../../../assets/icons/print.svg"
+                  class="sheet-control-icon"
+                />
+              </div>
+              <div class="sheet-control-icon-bg">
+                <img
+                  src="../../../assets/icons/brush.svg"
+                  class="sheet-control-icon"
+                />
+              </div>
+              <div style="float: left;">
+                <el-divider direction="vertical"></el-divider>
+              </div>
+              <el-dropdown trigger="click" class="sheet-control-item-menu">
+                <span class="el-dropdown-link">
+                  常规<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>常规</el-dropdown-item>
+                  <el-dropdown-item>文本</el-dropdown-item>
+                  <el-dropdown-item divided>数值</el-dropdown-item>
+                  <el-dropdown-item>百分比</el-dropdown-item>
+                  <el-dropdown-item divided>日期</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+              <el-dropdown trigger="click" class="sheet-control-item-menu">
+                <span class="el-dropdown-link">
+                  微软雅黑<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>宋体</el-dropdown-item>
+                  <el-dropdown-item>黑体</el-dropdown-item>
+                  <el-dropdown-item>仿宋</el-dropdown-item>
+                  <el-dropdown-item>楷体</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+              <el-dropdown trigger="click" class="sheet-control-item-menu">
+                <span class="el-dropdown-link">
+                  10<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item v-for="num in 10">{{
+                    num + 8
+                  }}</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+              <div style="float: left;">
+                <el-divider direction="vertical"></el-divider>
+              </div>
+              <div class="sheet-control-icon-bg">
+                <img
+                  src="../../../assets/icons/bold.svg"
+                  class="sheet-control-icon"
+                />
+              </div>
+              <div class="sheet-control-icon-bg">
+                <img
+                  src="../../../assets/icons/italic.svg"
+                  class="sheet-control-icon"
+                />
+              </div>
+              <div class="sheet-control-icon-bg">
+                <img
+                  src="../../../assets/icons/underline.svg"
+                  class="sheet-control-icon"
+                />
+              </div>
+              <div class="sheet-control-icon-bg">
+                <img
+                  src="../../../assets/icons/strikethrough.svg"
+                  class="sheet-control-icon"
+                />
+              </div>
+            </div>
+          </div>
           <div style="height: 40px;">&nbsp;</div>
         </div>
       </div>
-      <div class="sheet-control-menu"></div>
+
+      <div class="cell-control-menu"></div>
     </div>
     <div>
       <hot-table
@@ -179,32 +270,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.online-file-menu {
-  width: 100%;
-}
-.file-control-menu {
-  width: 100%;
-}
-.file-menu-item {
-  float: right;
-  margin-right: 6px;
-  margin-top: 6px;
-  height: 30px;
-  width: 50px;
-  text-align: center;
-  padding-top: 4px;
-  cursor: default;
-}
-.file-menu-item:hover {
-  background: rgba(240, 240, 240, 0.5);
-}
-.sheet-control-menu {
-  width: 100%;
-  height: 30px;
-  margin-top: 6px;
-  border-top: 0.5px solid rgba(128, 128, 128, 0.8);
-  border-bottom: 0.5px solid rgba(128, 128, 128, 0.8);
-}
 div::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -223,5 +288,63 @@ div::-webkit-scrollbar-thumb:hover {
 }
 div::-webkit-scrollbar-corner {
   background: rgb(239, 239, 239);
+}
+.online-file-menu {
+  width: 100%;
+}
+.file-control-menu {
+  width: 100%;
+}
+.file-menu-item {
+  float: right;
+  margin-right: 6px;
+  margin-top: 6px;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  padding-top: 4px;
+  cursor: default;
+}
+.file-menu-item:hover {
+  background: rgba(240, 240, 240, 0.5);
+}
+.sheet-control-menu {
+  width: 100%;
+  height: 48px;
+  margin-top: 6px;
+  border-top: 0.5px solid rgba(128, 128, 128, 0.8);
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.8);
+}
+.sheet-control-icon {
+  width: 20px;
+  height: 30px;
+}
+.sheet-control-icon-bg {
+  width: 36px;
+  height: 32px;
+  padding-left: 8px;
+  float: left;
+}
+.sheet-control-icon-bg:hover {
+  background: rgba(240, 240, 240, 0.5);
+}
+.sheet-control-item-menu {
+  margin-right: 6px;
+  padding: 0px 6px;
+  height: 30px;
+  text-align: center;
+  padding-top: 4px;
+  cursor: default;
+  float: left;
+}
+.sheet-control-item-menu:hover {
+  background: rgba(240, 240, 240, 0.5);
+}
+.cell-control-menu {
+  width: 100%;
+  height: 30px;
+  margin-top: 6px;
+  border-top: 0.5px solid rgba(128, 128, 128, 0.8);
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.8);
 }
 </style>

@@ -10,11 +10,7 @@
     <el-container>
       <el-aside width>
         <div class="card-body">
-          <el-card
-            shadow="hover"
-            body-style="padding:0px"
-            style="width: 300px;"
-          >
+          <el-card shadow="hover" body-style="padding:0px" style="width: 300px;">
             <div slot="header" class="clearfix">
               <el-input
                 style="width: 200px;"
@@ -51,14 +47,16 @@
                 <div class="note-info-footer">2020-02-20 18:26:48</div>
               </div>
             </div>
-            <el-pagination
-              style="margin: 10px 0px;"
-              small
-              background
-              layout="prev, pager, next"
-              :page-size="4"
-              :total="104"
-            ></el-pagination>
+            <div style="text-align:center">
+              <el-pagination
+                style="margin: 10px 0px;"
+                small
+                background
+                layout="prev, pager, next"
+                :page-size="4"
+                :total="200"
+              ></el-pagination>
+            </div>
           </el-card>
         </div>
       </el-aside>
@@ -70,18 +68,16 @@
               <div style="text-align: center;">
                 <div v-if="!edit_note_title">
                   <el-tooltip content="点击以编辑标题">
-                    <span class="note-title" @click="EditNoteTitle()">{{
+                    <span class="note-title" @click="EditNoteTitle()">
+                      {{
                       note_title
-                    }}</span>
+                      }}
+                    </span>
                   </el-tooltip>
                 </div>
 
                 <div v-if="edit_note_title">
-                  <el-input
-                    style="width: 400px;"
-                    placeholder="输入标题"
-                    v-model="note_title"
-                  />
+                  <el-input style="width: 400px;" placeholder="输入标题" v-model="note_title" />
                   <i
                     class="el-icon-circle-check"
                     style="cursor: pointer;font-size: 180%;margin-left: 10px;margin-right: 6px;"
@@ -95,20 +91,14 @@
                 </div>
               </div>
             </div>
-            <div
-              style="font-size: 180%;float: right;padding-right: 10px;cursor: pointer;"
-            >
+            <div style="font-size: 180%;float: right;padding-right: 10px;cursor: pointer;">
               <el-tooltip content="保存">
                 <i class="el-icon-upload"></i>
               </el-tooltip>
             </div>
           </div>
           <div>
-            <ckeditor
-              :editor="editor"
-              v-model="editor_data"
-              :config="editor_config"
-            ></ckeditor>
+            <ckeditor :editor="editor" v-model="editor_data" :config="editor_config"></ckeditor>
           </div>
         </el-card>
       </el-main>
