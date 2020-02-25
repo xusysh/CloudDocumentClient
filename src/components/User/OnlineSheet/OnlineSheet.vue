@@ -1,222 +1,229 @@
 <template>
-  <div class="card" style="height: 86vh;">
-    <div class="card-header">
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item>客户端（普通用户）</el-breadcrumb-item>
-        <el-breadcrumb-item>在线协作</el-breadcrumb-item>
-        <el-breadcrumb-item>在线表格</el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-    <div class="online-file-menu">
-      <div class="file-control-menu;">
-        <img
-          src="../../../assets/icons/excel.svg"
-          style="display:block;width:28px;height:60px;float: left;margin-left: 20px;margin-right: 10px;margin-top: -10px;"
-        />
-        <div style="margin-top: 6px;">
-          <span style="font-size: 160%;font-weight: 500;float: left;"
-            >文件名</span
-          >
-          <div
-            style="font-size: 150%;float: left;margin-top: 2px;margin-left: 10px;"
-          >
-            <el-tooltip effect="dark" content="收藏">
-              <i class="el-icon-star-off"></i>
-            </el-tooltip>
-            <el-tooltip effect="dark" content="移动">
-              <i class="el-icon-folder-opened"></i>
-            </el-tooltip>
-          </div>
-          <el-button
-            type="primary"
-            size="medium"
-            style="float: right;margin-top: 2px;margin-right: 16px;"
-          >
-            <i class="el-icon-unlock"></i>共享
-          </el-button>
-          <el-dropdown trigger="click" class="file-menu-item">
-            <span class="el-dropdown-link">
-              帮助
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>手册</el-dropdown-item>
-              <el-dropdown-item>函数</el-dropdown-item>
-              <el-dropdown-item>快捷键</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown trigger="click" class="file-menu-item">
-            <span class="el-dropdown-link">
-              数据
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>筛选</el-dropdown-item>
-              <el-dropdown-item>排序</el-dropdown-item>
-              <el-dropdown-item>校验</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown trigger="click" class="file-menu-item">
-            <span class="el-dropdown-link">
-              格式
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>数据格式</el-dropdown-item>
-              <el-dropdown-item>格式刷</el-dropdown-item>
-              <el-dropdown-item divided>粗体</el-dropdown-item>
-              <el-dropdown-item>斜体</el-dropdown-item>
-              <el-dropdown-item>下划线</el-dropdown-item>
-              <el-dropdown-item divided>隐藏网格线</el-dropdown-item>
-              <el-dropdown-item divided>合并单元格</el-dropdown-item>
-              <el-dropdown-item divided>行高列宽</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown trigger="click" class="file-menu-item">
-            <span class="el-dropdown-link">
-              插入
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>在上方插入一行</el-dropdown-item>
-              <el-dropdown-item>在下方插入一行</el-dropdown-item>
-              <el-dropdown-item divided>在左侧插入一列</el-dropdown-item>
-              <el-dropdown-item>在右侧插入一列</el-dropdown-item>
-              <el-dropdown-item divided>函数</el-dropdown-item>
-              <el-dropdown-item divided>图片</el-dropdown-item>
-              <el-dropdown-item>链接</el-dropdown-item>
-              <el-dropdown-item>批注</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown trigger="click" class="file-menu-item">
-            <span class="el-dropdown-link">
-              编辑
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>撤销</el-dropdown-item>
-              <el-dropdown-item>重做</el-dropdown-item>
-              <el-dropdown-item>剪切</el-dropdown-item>
-              <el-dropdown-item>复制</el-dropdown-item>
-              <el-dropdown-item>粘贴</el-dropdown-item>
-              <el-dropdown-item>全选</el-dropdown-item>
-              <el-dropdown-item divided>查找与替换</el-dropdown-item>
-              <el-dropdown-item>删除所在行</el-dropdown-item>
-              <el-dropdown-item>删除所在列</el-dropdown-item>
-              <el-dropdown-item divided>清除格式</el-dropdown-item>
-              <el-dropdown-item>清除内容</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown trigger="click" class="file-menu-item">
-            <span class="el-dropdown-link">
-              文件
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>新建</el-dropdown-item>
-              <el-dropdown-item>重命名</el-dropdown-item>
-              <el-dropdown-item>保存</el-dropdown-item>
-              <el-dropdown-item divided>导入</el-dropdown-item>
-              <el-dropdown-item>导出</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <div style="float: left;margin-top: 6px;margin-left: 50px;">
-            <div>
-              <div class="sheet-control-icon-bg">
-                <img
-                  src="../../../assets/icons/undo.svg"
-                  class="sheet-control-icon"
-                />
-              </div>
-              <div class="sheet-control-icon-bg">
-                <img
-                  src="../../../assets/icons/redo.svg"
-                  class="sheet-control-icon"
-                />
-              </div>
-              <div class="sheet-control-icon-bg">
-                <img
-                  src="../../../assets/icons/print.svg"
-                  class="sheet-control-icon"
-                />
-              </div>
-              <div class="sheet-control-icon-bg">
-                <img
-                  src="../../../assets/icons/brush.svg"
-                  class="sheet-control-icon"
-                />
-              </div>
-              <div style="float: left;">
-                <el-divider direction="vertical"></el-divider>
-              </div>
-              <el-dropdown trigger="click" class="sheet-control-item-menu">
-                <span class="el-dropdown-link">
-                  常规<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>常规</el-dropdown-item>
-                  <el-dropdown-item>文本</el-dropdown-item>
-                  <el-dropdown-item divided>数值</el-dropdown-item>
-                  <el-dropdown-item>百分比</el-dropdown-item>
-                  <el-dropdown-item divided>日期</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <el-dropdown trigger="click" class="sheet-control-item-menu">
-                <span class="el-dropdown-link">
-                  微软雅黑<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>宋体</el-dropdown-item>
-                  <el-dropdown-item>黑体</el-dropdown-item>
-                  <el-dropdown-item>仿宋</el-dropdown-item>
-                  <el-dropdown-item>楷体</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <el-dropdown trigger="click" class="sheet-control-item-menu">
-                <span class="el-dropdown-link">
-                  10<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item v-for="num in 10">{{
-                    num + 8
-                  }}</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <div style="float: left;">
-                <el-divider direction="vertical"></el-divider>
-              </div>
-              <div class="sheet-control-icon-bg">
-                <img
-                  src="../../../assets/icons/bold.svg"
-                  class="sheet-control-icon"
-                />
-              </div>
-              <div class="sheet-control-icon-bg">
-                <img
-                  src="../../../assets/icons/italic.svg"
-                  class="sheet-control-icon"
-                />
-              </div>
-              <div class="sheet-control-icon-bg">
-                <img
-                  src="../../../assets/icons/underline.svg"
-                  class="sheet-control-icon"
-                />
-              </div>
-              <div class="sheet-control-icon-bg">
-                <img
-                  src="../../../assets/icons/strikethrough.svg"
-                  class="sheet-control-icon"
-                />
+  <div>
+    <div class="card" style="height: 86vh;">
+      <div class="card-header">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item>客户端（普通用户）</el-breadcrumb-item>
+          <el-breadcrumb-item>在线协作</el-breadcrumb-item>
+          <el-breadcrumb-item>在线表格</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+      <div class="online-file-menu">
+        <div class="file-control-menu;">
+          <img
+            src="../../../assets/icons/excel.svg"
+            style="display:block;width:28px;height:60px;float: left;margin-left: 20px;margin-right: 10px;margin-top: -10px;"
+          />
+          <div style="margin-top: 6px;">
+            <span style="font-size: 160%;font-weight: 500;float: left;"
+              >文件名</span
+            >
+            <div
+              style="font-size: 150%;float: left;margin-top: 2px;margin-left: 10px;"
+            >
+              <el-tooltip effect="dark" content="收藏">
+                <i class="el-icon-star-off"></i>
+              </el-tooltip>
+              <el-tooltip effect="dark" content="移动">
+                <i class="el-icon-folder-opened"></i>
+              </el-tooltip>
+            </div>
+            <el-button
+              type="primary"
+              size="medium"
+              style="float: right;margin-top: 2px;margin-right: 16px;"
+            >
+              <i class="el-icon-unlock"></i>共享
+            </el-button>
+            <el-dropdown trigger="click" class="file-menu-item">
+              <span class="el-dropdown-link">
+                帮助
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>手册</el-dropdown-item>
+                <el-dropdown-item>函数</el-dropdown-item>
+                <el-dropdown-item>快捷键</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-dropdown trigger="click" class="file-menu-item">
+              <span class="el-dropdown-link">
+                数据
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>筛选</el-dropdown-item>
+                <el-dropdown-item>排序</el-dropdown-item>
+                <el-dropdown-item>校验</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-dropdown trigger="click" class="file-menu-item">
+              <span class="el-dropdown-link">
+                格式
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>数据格式</el-dropdown-item>
+                <el-dropdown-item>格式刷</el-dropdown-item>
+                <el-dropdown-item divided>粗体</el-dropdown-item>
+                <el-dropdown-item>斜体</el-dropdown-item>
+                <el-dropdown-item>下划线</el-dropdown-item>
+                <el-dropdown-item divided>隐藏网格线</el-dropdown-item>
+                <el-dropdown-item divided>合并单元格</el-dropdown-item>
+                <el-dropdown-item divided>行高列宽</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-dropdown trigger="click" class="file-menu-item">
+              <span class="el-dropdown-link">
+                插入
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>在上方插入一行</el-dropdown-item>
+                <el-dropdown-item>在下方插入一行</el-dropdown-item>
+                <el-dropdown-item divided>在左侧插入一列</el-dropdown-item>
+                <el-dropdown-item>在右侧插入一列</el-dropdown-item>
+                <el-dropdown-item divided>函数</el-dropdown-item>
+                <el-dropdown-item divided>图片</el-dropdown-item>
+                <el-dropdown-item>链接</el-dropdown-item>
+                <el-dropdown-item>批注</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-dropdown trigger="click" class="file-menu-item">
+              <span class="el-dropdown-link">
+                编辑
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>撤销</el-dropdown-item>
+                <el-dropdown-item>重做</el-dropdown-item>
+                <el-dropdown-item>剪切</el-dropdown-item>
+                <el-dropdown-item>复制</el-dropdown-item>
+                <el-dropdown-item>粘贴</el-dropdown-item>
+                <el-dropdown-item>全选</el-dropdown-item>
+                <el-dropdown-item divided>查找与替换</el-dropdown-item>
+                <el-dropdown-item>删除所在行</el-dropdown-item>
+                <el-dropdown-item>删除所在列</el-dropdown-item>
+                <el-dropdown-item divided>清除格式</el-dropdown-item>
+                <el-dropdown-item>清除内容</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-dropdown trigger="click" class="file-menu-item">
+              <span class="el-dropdown-link">
+                文件
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>新建</el-dropdown-item>
+                <el-dropdown-item>重命名</el-dropdown-item>
+                <el-dropdown-item>保存</el-dropdown-item>
+                <el-dropdown-item divided>导入</el-dropdown-item>
+                <el-dropdown-item>导出</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <div style="float: left;margin-top: 6px;margin-left: 50px;">
+              <div>
+                <div class="sheet-control-icon-bg">
+                  <img
+                    src="../../../assets/icons/undo.svg"
+                    class="sheet-control-icon"
+                  />
+                </div>
+                <div class="sheet-control-icon-bg">
+                  <img
+                    src="../../../assets/icons/redo.svg"
+                    class="sheet-control-icon"
+                  />
+                </div>
+                <div class="sheet-control-icon-bg">
+                  <img
+                    src="../../../assets/icons/print.svg"
+                    class="sheet-control-icon"
+                  />
+                </div>
+                <div class="sheet-control-icon-bg">
+                  <img
+                    src="../../../assets/icons/brush.svg"
+                    class="sheet-control-icon"
+                  />
+                </div>
+                <div style="float: left;">
+                  <el-divider direction="vertical"></el-divider>
+                </div>
+                <el-dropdown trigger="click" class="sheet-control-item-menu">
+                  <span class="el-dropdown-link">
+                    常规<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>常规</el-dropdown-item>
+                    <el-dropdown-item>文本</el-dropdown-item>
+                    <el-dropdown-item divided>数值</el-dropdown-item>
+                    <el-dropdown-item>百分比</el-dropdown-item>
+                    <el-dropdown-item divided>日期</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <el-dropdown trigger="click" class="sheet-control-item-menu">
+                  <span class="el-dropdown-link">
+                    微软雅黑<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>宋体</el-dropdown-item>
+                    <el-dropdown-item>黑体</el-dropdown-item>
+                    <el-dropdown-item>仿宋</el-dropdown-item>
+                    <el-dropdown-item>楷体</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <el-dropdown trigger="click" class="sheet-control-item-menu">
+                  <span class="el-dropdown-link">
+                    10<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item v-for="num in 10" :key="num">{{
+                      num + 8
+                    }}</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <div style="float: left;">
+                  <el-divider direction="vertical"></el-divider>
+                </div>
+                <div class="sheet-control-icon-bg">
+                  <img
+                    src="../../../assets/icons/bold.svg"
+                    class="sheet-control-icon"
+                  />
+                </div>
+                <div class="sheet-control-icon-bg">
+                  <img
+                    src="../../../assets/icons/italic.svg"
+                    class="sheet-control-icon"
+                  />
+                </div>
+                <div class="sheet-control-icon-bg">
+                  <img
+                    src="../../../assets/icons/underline.svg"
+                    class="sheet-control-icon"
+                  />
+                </div>
+                <div class="sheet-control-icon-bg">
+                  <img
+                    src="../../../assets/icons/strikethrough.svg"
+                    class="sheet-control-icon"
+                  />
+                </div>
               </div>
             </div>
+            <div style="height: 40px;">&nbsp;</div>
           </div>
-          <div style="height: 40px;">&nbsp;</div>
         </div>
-      </div>
 
-      <div class="cell-control-menu"></div>
-    </div>
-    <div>
-      <hot-table
-        ref="hotTableComponent"
-        :settings="hotSettings"
-        licenseKey="non-commercial-and-evaluation"
-      ></hot-table>
+        <el-container class="cell-control-menu">
+          <el-aside width="150px" class="cell-status">
+            A1
+          </el-aside>
+          <el-main class="cell-content">cell content</el-main>
+        </el-container>
+      </div>
+      <div>
+        <hot-table
+          ref="hotTableComponent"
+          :settings="hotSettings"
+          licenseKey="non-commercial-and-evaluation"
+        ></hot-table>
+      </div>
     </div>
   </div>
 </template>
@@ -342,9 +349,23 @@ div::-webkit-scrollbar-corner {
 }
 .cell-control-menu {
   width: 100%;
-  height: 30px;
+  height: 36px;
   margin-top: 6px;
   border-top: 0.5px solid rgba(128, 128, 128, 0.8);
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.8);
+  padding: 0;
+}
+.cell-status {
+  text-align: center;
+  height: 100%;
+  padding-top: 2px;
+  border: 0.5px solid rgba(200, 200, 200, 0.9);
+  background: #f8f8f8;
+}
+.cell-content {
+  text-align: center;
+  height: 100%;
+  padding: 0;
+  font-size: 120%;
 }
 </style>
