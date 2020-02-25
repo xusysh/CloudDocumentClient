@@ -217,13 +217,19 @@
           <el-main class="cell-content">cell content</el-main>
         </el-container>
       </div>
-      <div>
-        <hot-table
-          ref="hotTableComponent"
-          :settings="hotSettings"
-          licenseKey="non-commercial-and-evaluation"
-        ></hot-table>
-      </div>
+      <el-tabs tab-position="bottom" type="border-card" editable>
+        <el-tab-pane label="sheet1" style="padding: 0;height: 462px;"
+          ><div>
+            <hot-table
+              ref="hotTableComponent"
+              :settings="hotSettings"
+              licenseKey="non-commercial-and-evaluation"
+            ></hot-table></div
+        ></el-tab-pane>
+        <el-tab-pane label="sheet2">sheet2</el-tab-pane>
+        <el-tab-pane label="sheet3">sheet3</el-tab-pane>
+        <el-tab-pane label="sheet4">sheet4</el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -241,7 +247,7 @@ export default {
         data: Handsontable.helper.createSpreadsheetData(26, 26),
         colHeaders: true,
         rowHeaders: true,
-        height: 480,
+        height: 460,
         language: "zh-CN", //声明用中文的语言包
         contextMenu: [
           "row_above",
@@ -367,5 +373,9 @@ div::-webkit-scrollbar-corner {
   height: 100%;
   padding: 0;
   font-size: 120%;
+}
+.sheet-footer {
+  height: 35px;
+  background: #f8f8f8;
 }
 </style>
