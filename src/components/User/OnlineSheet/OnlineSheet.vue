@@ -103,16 +103,22 @@
                 <el-dropdown-item>清除内容</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-            <el-dropdown trigger="click" class="file-menu-item">
+            <el-dropdown
+              trigger="click"
+              class="file-menu-item"
+              @command="HandleFileCommand"
+            >
               <span class="el-dropdown-link">
                 文件
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>新建</el-dropdown-item>
-                <el-dropdown-item>重命名</el-dropdown-item>
-                <el-dropdown-item>保存</el-dropdown-item>
-                <el-dropdown-item divided>导入</el-dropdown-item>
-                <el-dropdown-item>导出</el-dropdown-item>
+                <el-dropdown-item command="new">新建</el-dropdown-item>
+                <el-dropdown-item command="rename">重命名</el-dropdown-item>
+                <el-dropdown-item command="save">保存</el-dropdown-item>
+                <el-dropdown-item divided command="import"
+                  >导入</el-dropdown-item
+                >
+                <el-dropdown-item command="export">导出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
             <div style="float: left;margin-top: 6px;margin-left: 50px;">
@@ -214,12 +220,12 @@
           <el-aside width="150px" class="cell-status">
             A1
           </el-aside>
-          <el-main class="cell-content">cell content</el-main>
+          <el-main class="cell-content">{{}}</el-main>
         </el-container>
       </div>
       <el-tabs tab-position="bottom" type="border-card" editable>
         <el-tab-pane label="sheet1" style="height: 462px;"
-          ><div>
+          ><div v-loading="first_time_fetching_sheet_data">
             <hot-table
               ref="hotTableComponent"
               :settings="hotSettings"
@@ -241,6 +247,7 @@ import { HotTable, HotColumn } from "@handsontable/vue";
 import Handsontable from "handsontable";
 import "handsontable/languages/zh-CN";
 import { interval } from "rxjs";
+import * as XLSX from "xlsx";
 
 const script_global = this;
 export default {
@@ -255,8 +262,9 @@ export default {
       last_save_stamp: 0,
       timer: null,
       change_lock: false,
+      first_time_fetching_sheet_data: true,
       hotSettings: {
-        data: Handsontable.helper.createSpreadsheetData(26, 26),
+        data: [[]],
         colHeaders: true,
         rowHeaders: true,
         height: 460,
@@ -289,13 +297,15 @@ export default {
   mounted() {
     //  this.$refs.hotTableComponent.hotInstance.loadData([["new", "data"]]);
     this.SockInit(this.websocket_endPoint, this.addr_map, this.topic);
+    const _this = this;
     const WSMessageReceived = resp => {
       console.log("Message Recieved from Server");
       let response = JSON.parse(resp.body);
-      if (response.operation == "fetch" && !this.change_lock) {
-        this.$refs.hotTableComponent.hotInstance.loadData(
+      if (response.operation == "fetch" && !_this.change_lock) {
+        _this.$refs.hotTableComponent.hotInstance.loadData(
           JSON.parse(response.data)
         );
+        _this.first_time_fetching_sheet_data = false;
       } else if (response.operation == "save") {
         if (response.stamp == this.last_save_stamp) {
           this.change_lock = false;
@@ -364,22 +374,46 @@ export default {
       });
     },
     ImportSheetData() {},
-    ExportSheetData() {},
+    ExportSheetData() {
+      /* generate worksheet */
+      const ws = XLSX.utils.aoa_to_sheet(
+        this.$refs.hotTableComponent.hotInstance.getData()
+      );
+
+      /* generate workbook and add the worksheet */
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+      /* save to file */
+      XLSX.writeFile(wb, "SheetJS.xlsx");
+    },
     SaveSheetData() {
       const _this = this;
-
-      let data = this.$refs.hotTableComponent.hotInstance.getData();
       let sheet_data = JSON.stringify(
         this.$refs.hotTableComponent.hotInstance.getData()
       );
       this.last_save_stamp = this.stamp;
       this.change_lock = true;
-      this.network_service.SockSend({
+      this.SockSend({
         operation: "save",
         sheet_id: 1,
         sheet_data: sheet_data,
         stamp: this.stamp++
       });
+    },
+    HandleFileCommand(command) {
+      switch (command) {
+        case "save":
+          this.SaveSheetData();
+          break;
+        case "import":
+          break;
+        case "export":
+          this.ExportSheetData();
+          break;
+        default:
+          break;
+      }
     }
   },
   destroyed() {
