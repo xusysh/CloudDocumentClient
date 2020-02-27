@@ -184,7 +184,7 @@ export default {
             return;
           }
           this.note_info_list = JSON.parse(response.data);
-          this.CurrentPageChanged(0);
+          this.CurrentPageChanged(1);
           console.log(this.note_info_list);
         })
         .catch(err => {
@@ -200,12 +200,12 @@ export default {
     },
     GetPageNoteList(page_index) {
       if (this.note_info_list != undefined) {
-        let start = (page_index - 1) * 4 - 1;
-        let end =
+        let start = (page_index - 1) * 4;
+        let len =
           this.note_info_list.length - start < 4
             ? this.note_info_list.length - start
             : 4;
-        this.cur_page_note_list = this.note_info_list.slice(start, end);
+        this.cur_page_note_list = this.note_info_list.slice(start, start + len);
       } else this.cur_page_note_list = [];
     },
     GetNoteLastModifiedTime(date_time_span) {

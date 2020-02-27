@@ -30,6 +30,10 @@
           <el-menu-item index="/user/online-sheet">在线表格</el-menu-item>
           <el-menu-item index="3-2" disabled>在线文档</el-menu-item>
         </el-submenu>
+        <el-menu-item index="4">
+          <i class="el-icon-d-arrow-left"></i>
+          <span slot="title">退出</span>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
