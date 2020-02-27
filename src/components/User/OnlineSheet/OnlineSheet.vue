@@ -246,11 +246,13 @@ export default {
   name: "OnlineSheet",
   data() {
     return {
+      stomp_client: null,
+      websocket_endPoint: "http://localhost:9090/ws",
+      topic: "/online-doc/sheet",
+      addr_map: "/server/websocket",
+      stamp: 0,
+      timer: null,
       hotSettings: {
-        stomp_client: null,
-        websocket_endPoint: "http://localhost:9090/ws",
-        topic: "/online-doc/sheet",
-        addr_map: "/server/websocket",
         data: Handsontable.helper.createSpreadsheetData(26, 26),
         colHeaders: true,
         rowHeaders: true,
@@ -312,7 +314,7 @@ export default {
       this.stomp_client.connect(
         {},
         function connectedCallback(frame) {
-          this.InitTimer();
+          _this.InitTimer();
           _this.stomp_client.subscribe(_this.topic, function(sdkEvent) {
             receive_callback(sdkEvent);
           });
@@ -334,6 +336,7 @@ export default {
       console.log("websocket disconnected");
     },
     InitTimer() {
+      const _this = this;
       this.timer = interval(2000).subscribe(() => {
         /*      if (cur_time.getSeconds() % this.auto_fetch_interval == 0) {
           this.GetSheetData();
@@ -341,10 +344,10 @@ export default {
         if (cur_time.getSeconds() % this.auto_save_interval == 0) {
           this.SaveSheetData();
         } */
-        this.SockSend({
+        _this.SockSend({
           operation: "fetch",
           sheet_id: 1,
-          stamp: this.stamp++
+          stamp: _this.stamp++
         });
       });
     },
