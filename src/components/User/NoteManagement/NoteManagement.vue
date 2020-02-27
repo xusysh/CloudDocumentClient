@@ -26,9 +26,9 @@
                 style="margin-left: 10px;"
               ></el-button>
             </div>
-            <div class="note-info-list">
+            <div class="note-info-list" v-loading="note_info_list_loading">
               <div
-                v-for="(note, index) in note_list"
+                v-for="(note, index) in cur_page_note_list"
                 :key="index"
                 class="note-info-box"
                 @click="CheckNoteInfoDetail(index)"
@@ -36,19 +36,24 @@
                 @mouseover="MouseOverNoteInfoBox(index)"
                 @mouseleave="MouseLeaveNoteInfoBox(index)"
               >
-                <div class="note-info-title">
+                <div class="note-info-title" v-if="note!=undefined">
                   <i class="el-icon-notebook-2"></i>
-                  <span>标题</span>
+                  <span>{{note.file_name}}</span>
                 </div>
-                <div class="note-info-content">
-                  aasdasasdasdasdsad
-                  <br />asasd
+                <div class="note-info-content" v-if="note!=undefined">
+                  {{FetchHtmlContent(note.file_content)}}
+                  <br />
                 </div>
-                <div class="note-info-footer">2020-02-20 18:26:48</div>
+                <div
+                  class="note-info-footer"
+                  v-if="note!=undefined"
+                >{{GetNoteLastModifiedTime(note.last_modified_time.$date)}}</div>
               </div>
             </div>
             <div style="text-align:center">
               <el-pagination
+                @current-change="CurrentPageChanged"
+                :current-page="cur_page"
                 style="margin: 10px 0px;"
                 small
                 background
@@ -75,7 +80,6 @@
                     </span>
                   </el-tooltip>
                 </div>
-
                 <div v-if="edit_note_title">
                   <el-input style="width: 400px;" placeholder="输入标题" v-model="note_title" />
                   <i
@@ -109,12 +113,17 @@
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/zh-cn";
+import Moment from "moment";
+
 export default {
   name: "NoteManagement",
   data() {
     return {
       note_search_content: "",
-      note_list: new Array(4),
+      note_info_list: new Array(4),
+      cur_page_note_list: [],
+      note_info_list_loading: false,
+      cur_page: 1,
       note_title: "笔记1",
       note_title_bak: "",
       edit_note_title: false,
@@ -127,7 +136,10 @@ export default {
       }
     };
   },
-  mounted() {},
+  mounted() {
+    this.user_info = this.$store.state.userInfo;
+    this.GetAllNote();
+  },
   methods: {
     CheckNoteInfoDetail(index) {
       for (let i = 0; i < this.note_info_box_bg.length; i++) {
@@ -153,6 +165,62 @@ export default {
     CancelEditNoteTitle() {
       this.edit_note_title = false;
       this.note_title = this.note_title_bak;
+    },
+    GetAllNote() {
+      let user_id = this.user_info.id;
+      this.note_info_list_loading = true;
+      this.$axios
+        .post("http://106.54.236.110:8000/note/all", {
+          user_id: user_id
+        })
+        .then(resp => {
+          let response = resp.data;
+          this.note_info_list_loading = false;
+          if (resp.data.status != 200) {
+            this.$message({
+              message: "获取笔记内容失败：" + resp.data.msg,
+              type: "error"
+            });
+            return;
+          }
+          this.note_info_list = JSON.parse(response.data);
+          this.CurrentPageChanged(0);
+          console.log(this.note_info_list);
+        })
+        .catch(err => {
+          this.login_loading = false;
+          this.$message({
+            message: "获取笔记内容失败：服务器连接异常",
+            type: "error"
+          });
+        });
+    },
+    CurrentPageChanged(page_index) {
+      this.GetPageNoteList(page_index);
+    },
+    GetPageNoteList(page_index) {
+      if (this.note_info_list != undefined) {
+        let start = (page_index - 1) * 4 - 1;
+        let end =
+          this.note_info_list.length - start < 4
+            ? this.note_info_list.length - start
+            : 4;
+        this.cur_page_note_list = this.note_info_list.slice(start, end);
+      } else this.cur_page_note_list = [];
+    },
+    GetNoteLastModifiedTime(date_time_span) {
+      let date = new Date(date_time_span);
+      return Moment(date).format("YYYY-MM-DD HH:mm:ss");
+    },
+    /* 去除富文本中的html标签 */
+    FetchHtmlContent(richText) {
+      /* *、+限定符都是贪婪的，因为它们会尽可能多的匹配文字，只有在它们的后面加上一个?就可以实现非贪婪或最小匹配。*/
+      let content = richText.replace(/<[^>]+>/g, "");
+      /* 去除&amp;nbsp; */
+      content = content.replace(/&amp;nbsp;/gi, "");
+      /* 去除空格 */
+      content = content.replace(/\s/gi, "");
+      return content;
     }
   }
 };

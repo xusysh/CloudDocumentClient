@@ -218,7 +218,7 @@
         </el-container>
       </div>
       <el-tabs tab-position="bottom" type="border-card" editable>
-        <el-tab-pane label="sheet1" style="padding: 0;height: 462px;"
+        <el-tab-pane label="sheet1" style="height: 462px;"
           ><div>
             <hot-table
               ref="hotTableComponent"
@@ -235,15 +235,22 @@
 </template>
 
 <script>
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 import { HotTable, HotColumn } from "@handsontable/vue";
 import Handsontable from "handsontable";
 import "handsontable/languages/zh-CN";
+import { interval } from "rxjs";
 
 export default {
   name: "OnlineSheet",
   data() {
     return {
       hotSettings: {
+        stomp_client: null,
+        websocket_endPoint: "http://localhost:9090/ws",
+        topic: "/online-doc/sheet",
+        addr_map: "/server/websocket",
         data: Handsontable.helper.createSpreadsheetData(26, 26),
         colHeaders: true,
         rowHeaders: true,
@@ -269,14 +276,85 @@ export default {
   },
   mounted() {
     //  this.$refs.hotTableComponent.hotInstance.loadData([["new", "data"]]);
+    this.SockInit(this.websocket_endPoint, this.addr_map, this.topic);
+    const WSMessageReceived = resp => {
+      console.log("Message Recieved from Server");
+      let response = JSON.parse(resp.body);
+      if (response.operation == "fetch" && !this.change_lock) {
+        //set data sheet
+      } else if (response.operation == "save") {
+        if (response.stamp == this.last_save_stamp) {
+          this.change_lock = false;
+        }
+      }
+    };
+    const WSErrCallBack = error => {
+      console.log("errorCallBack -> " + error);
+      setTimeout(() => {
+        this.SockConnect(WSMessageReceived, WSErrCallBack);
+      }, 5000);
+    };
+    this.SockConnect(WSMessageReceived, WSErrCallBack);
   },
   components: {
     HotTable,
     HotColumn
   },
   methods: {
+    SockInit(ws_server_end_point, addr_map, topic) {
+      console.log("Initialize WebSocket Connection");
+      let ws = new SockJS(ws_server_end_point);
+      this.stomp_client = Stomp.over(ws);
+    },
+
+    SockConnect(receive_callback, error_callback) {
+      const _this = this;
+      this.stomp_client.connect(
+        {},
+        function connectedCallback(frame) {
+          this.InitTimer();
+          _this.stomp_client.subscribe(_this.topic, function(sdkEvent) {
+            receive_callback(sdkEvent);
+          });
+          //_this.stompClient.reconnect_delay = 2000;
+        },
+        error_callback
+      );
+    },
+
+    SockSend(message) {
+      //    console.log("calling logout api via web socket");
+      this.stomp_client.send(this.addr_map, {}, JSON.stringify(message));
+    },
+
+    SockDisconnect() {
+      if (this.stomp_client !== null) {
+        this.stomp_client.disconnect();
+      }
+      console.log("websocket disconnected");
+    },
+    InitTimer() {
+      this.timer = interval(2000).subscribe(() => {
+        /*      if (cur_time.getSeconds() % this.auto_fetch_interval == 0) {
+          this.GetSheetData();
+        }
+        if (cur_time.getSeconds() % this.auto_save_interval == 0) {
+          this.SaveSheetData();
+        } */
+        this.SockSend({
+          operation: "fetch",
+          sheet_id: 1,
+          stamp: this.stamp++
+        });
+      });
+    },
     ImportSheetData() {},
-    ExportSheetData() {}
+    ExportSheetData() {},
+    FetchSheetData() {},
+    SaveSheetData() {}
+  },
+  destroyed() {
+    this.SockDisconnect();
   }
 };
 </script>
@@ -377,5 +455,8 @@ div::-webkit-scrollbar-corner {
 .sheet-footer {
   height: 35px;
   background: #f8f8f8;
+}
+.el-tabs__content {
+  padding: 0px !important;
 }
 </style>
