@@ -242,6 +242,7 @@ import Handsontable from "handsontable";
 import "handsontable/languages/zh-CN";
 import { interval } from "rxjs";
 
+const script_global = this;
 export default {
   name: "OnlineSheet",
   data() {
@@ -251,7 +252,9 @@ export default {
       topic: "/online-doc/sheet",
       addr_map: "/server/websocket",
       stamp: 0,
+      last_save_stamp: 0,
       timer: null,
+      change_lock: false,
       hotSettings: {
         data: Handsontable.helper.createSpreadsheetData(26, 26),
         colHeaders: true,
@@ -272,7 +275,14 @@ export default {
           "cut",
           "mergeCells"
         ],
-        dropdownMenu: true
+        dropdownMenu: true,
+        afterChange: (changes, source) => {
+          //      console.log(changes);
+          //    console.log(source);
+          if (source != "loadData") {
+            this.SaveSheetData();
+          }
+        }
       }
     };
   },
@@ -283,7 +293,9 @@ export default {
       console.log("Message Recieved from Server");
       let response = JSON.parse(resp.body);
       if (response.operation == "fetch" && !this.change_lock) {
-        //set data sheet
+        this.$refs.hotTableComponent.hotInstance.loadData(
+          JSON.parse(response.data)
+        );
       } else if (response.operation == "save") {
         if (response.stamp == this.last_save_stamp) {
           this.change_lock = false;
@@ -353,8 +365,22 @@ export default {
     },
     ImportSheetData() {},
     ExportSheetData() {},
-    FetchSheetData() {},
-    SaveSheetData() {}
+    SaveSheetData() {
+      const _this = this;
+
+      let data = this.$refs.hotTableComponent.hotInstance.getData();
+      let sheet_data = JSON.stringify(
+        this.$refs.hotTableComponent.hotInstance.getData()
+      );
+      this.last_save_stamp = this.stamp;
+      this.change_lock = true;
+      this.network_service.SockSend({
+        operation: "save",
+        sheet_id: 1,
+        sheet_data: sheet_data,
+        stamp: this.stamp++
+      });
+    }
   },
   destroyed() {
     this.SockDisconnect();
