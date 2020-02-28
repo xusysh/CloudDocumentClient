@@ -15,9 +15,22 @@
               <el-input
                 style="width: 200px;"
                 placeholder="搜索我的笔记"
-                prefix-icon="el-icon-search"
                 v-model="note_search_content"
-              />
+                @keypress.enter.native="SearchNote($event)"
+              >
+                <i
+                  slot="suffix"
+                  class="el-input__icon el-icon-refresh"
+                  style="cursor:pointer"
+                  @click="GetAllNote(null)"
+                ></i>
+                <i
+                  slot="suffix"
+                  class="el-input__icon el-icon-search"
+                  style="cursor:pointer"
+                  @click="SearchNote(null)"
+                ></i>
+              </el-input>
               <el-button
                 circle
                 type="primary"
@@ -306,6 +319,34 @@ export default {
       /* 去除空格 */
       content = content.replace(/\s/gi, "");
       return content;
+    },
+    SearchNote(event) {
+      this.note_info_list_loading = true;
+      this.$axios
+        .post("http://106.54.236.110:8000/note/search", {
+          note_search_content: this.note_search_content
+        })
+        .then(resp => {
+          let response = resp.data;
+          this.note_info_list_loading = false;
+          if (resp.data.status != 200) {
+            this.$message({
+              message: "获取笔记内容失败：" + resp.data.msg,
+              type: "error"
+            });
+            return;
+          }
+          this.note_info_list = JSON.parse(response.data);
+          this.CurrentPageChanged(this.cur_page);
+          console.log(this.note_info_list);
+        })
+        .catch(err => {
+          this.login_loading = false;
+          this.$message({
+            message: "获取笔记内容失败：服务器连接异常",
+            type: "error"
+          });
+        });
     }
   }
 };
@@ -327,7 +368,6 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
