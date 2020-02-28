@@ -107,8 +107,9 @@
               prop="address"
               label="最后修改日期"
             ></el-table-column>
-            <el-table-column label="操作" width="120px">
+            <el-table-column label="操作" width="160px">
               <template slot-scope="scope">
+                <el-button size="mini" circle icon="el-icon-view"></el-button>
                 <el-button size="mini" circle icon="el-icon-edit"></el-button>
                 <el-button
                   size="mini"
@@ -182,27 +183,27 @@ export default {
       data: JSON.parse(JSON.stringify(data)),
       tableData: [
         {
-          date: "xx微服务需求分析",
+          date: "xx微服务需求分析.docx",
           name: "admin",
           address: "2020-02-22 19:47:14"
         },
         {
-          date: "xx微服务详细设计",
+          date: "xx微服务详细设计.docx",
           name: "admin",
           address: "2020-02-22 19:47:14"
         },
         {
-          date: "金科部xx统计2020.02",
+          date: "金科部xx统计2020.02.docx",
           name: "admin",
           address: "2020-02-22 19:47:14"
         },
         {
-          date: "前后端接口",
+          date: "前后端接口.xlsx",
           name: "郭靖宇",
           address: "2020-02-22 19:47:14"
         },
         {
-          date: "设计文档2",
+          date: "应用logo.jpg",
           name: "xusysh",
           address: "2020-02-22 19:47:14"
         },

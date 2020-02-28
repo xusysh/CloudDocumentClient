@@ -218,7 +218,7 @@
 
         <el-container class="cell-control-menu">
           <el-aside width="150px" class="cell-status">
-            ({{ select_row1 }},{{ select_col1 }})
+            ({{ select_row1 + 1 }},{{ select_col1 + 1 }})
           </el-aside>
           <el-main class="cell-content">{{ cell_content }}</el-main>
         </el-container>
