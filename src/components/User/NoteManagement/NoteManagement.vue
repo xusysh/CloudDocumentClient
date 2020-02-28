@@ -141,7 +141,7 @@ export default {
       note_info_list: new Array(4),
       cur_page_note_list: [],
       cur_note_id: null,
-      cur_note_index: 0,
+      cur_note_index: -1,
       note_info_list_loading: false,
       cur_page: 1,
       note_title: "新笔记",
@@ -261,6 +261,7 @@ export default {
     },
     CurrentPageChanged(page_index) {
       this.GetPageNoteList(page_index);
+      if (this.cur_note_index == -1) return;
       for (let i = 0; i < this.note_info_box_bg.length; i++) {
         if ((this.cur_page - 1) * 4 + i == this.cur_note_index)
           this.$set(this.note_info_box_bg, i, "#eaf0fb");

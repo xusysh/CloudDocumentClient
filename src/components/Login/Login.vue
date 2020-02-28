@@ -11,7 +11,12 @@
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input v-model="login_form.password" type="password" placeholder="请输入密码">
+              <el-input
+                v-model="login_form.password"
+                type="password"
+                placeholder="请输入密码"
+                @keypress.enter.native="Login('loginForm')"
+              >
                 <i slot="prefix" class="el-input__icon el-icon-key"></i>
               </el-input>
             </el-form-item>
