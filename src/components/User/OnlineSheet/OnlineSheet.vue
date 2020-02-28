@@ -15,9 +15,9 @@
             style="display:block;width:28px;height:60px;float: left;margin-left: 20px;margin-right: 10px;margin-top: -10px;"
           />
           <div style="margin-top: 6px;">
-            <span style="font-size: 160%;font-weight: 500;float: left;"
-              >文件名</span
-            >
+            <span style="font-size: 160%;font-weight: 500;float: left;">{{
+              file_name
+            }}</span>
             <div
               style="font-size: 150%;float: left;margin-top: 2px;margin-left: 10px;"
             >
@@ -218,9 +218,9 @@
 
         <el-container class="cell-control-menu">
           <el-aside width="150px" class="cell-status">
-            A1
+            ({{ select_row1 }},{{ select_col1 }})
           </el-aside>
-          <el-main class="cell-content">{{}}</el-main>
+          <el-main class="cell-content">{{ cell_content }}</el-main>
         </el-container>
       </div>
       <el-tabs tab-position="bottom" type="border-card" editable>
@@ -263,6 +263,12 @@ export default {
       timer: null,
       change_lock: false,
       first_time_fetching_sheet_data: true,
+      file_name: "文件名",
+      cell_content: "",
+      select_row1: 0,
+      select_col1: 0,
+      select_row2: 0,
+      select_col2: 0,
       hotSettings: {
         data: [[]],
         colHeaders: true,
@@ -290,6 +296,21 @@ export default {
           if (source != "loadData") {
             this.SaveSheetData();
           }
+        },
+        afterSelection: (
+          row,
+          column,
+          row2,
+          column2,
+          preventScrolling,
+          selectionLayerLevel
+        ) => {
+          // setting if prevent scrolling after selection
+          this.GetSelectedCellContent();
+          this.select_row1 = row;
+          this.select_col1 = column;
+          this.select_row2 = row2;
+          this.select_col2 = column2;
         }
       }
     };
@@ -359,7 +380,7 @@ export default {
     },
     InitTimer() {
       const _this = this;
-      this.timer = interval(2000).subscribe(() => {
+      this.timer = interval(10000).subscribe(() => {
         /*      if (cur_time.getSeconds() % this.auto_fetch_interval == 0) {
           this.GetSheetData();
         }
@@ -385,7 +406,10 @@ export default {
       XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
       /* save to file */
-      XLSX.writeFile(wb, "SheetJS.xlsx");
+      XLSX.writeFile(
+        wb,
+        this.file_name + "-" + new Date().toLocaleDateString() + ".xlsx"
+      );
     },
     SaveSheetData() {
       const _this = this;
@@ -400,6 +424,9 @@ export default {
         sheet_data: sheet_data,
         stamp: this.stamp++
       });
+    },
+    GetSelectedCellContent() {
+      this.cell_content = this.$refs.hotTableComponent.hotInstance.getValue();
     },
     HandleFileCommand(command) {
       switch (command) {
