@@ -24,6 +24,7 @@
                 size="medium"
                 icon="el-icon-plus"
                 style="margin-left: 10px;"
+                @click="AddNote()"
               ></el-button>
             </div>
             <div class="note-info-list" v-loading="note_info_list_loading">
@@ -44,22 +45,26 @@
                   {{FetchHtmlContent(note.file_content)}}
                   <br />
                 </div>
-                <div
-                  class="note-info-footer"
-                  v-if="note!=undefined"
-                >{{GetNoteLastModifiedTime(note.last_modified_time.$date)}}</div>
+                <div class="note-info-footer" v-if="note!=undefined">
+                  {{GetNoteLastModifiedTime(note.last_modified_time.$date)}}
+                  <div style="float:right" v-if="note_info_box_bg[index] != 'none'">
+                    <i class="el-icon-star-off note-info-footer-icons"></i>
+                    <i class="el-icon-share note-info-footer-icons"></i>
+                    <i class="el-icon-delete note-info-footer-icons"></i>
+                  </div>
+                </div>
               </div>
             </div>
             <div style="text-align:center">
               <el-pagination
                 @current-change="CurrentPageChanged"
-                :current-page="cur_page"
+                :current-page.sync="cur_page"
                 style="margin: 10px 0px;"
                 small
                 background
                 layout="prev, pager, next"
                 :page-size="4"
-                :total="200"
+                :total="note_info_list.length"
               ></el-pagination>
             </div>
           </el-card>
@@ -97,7 +102,7 @@
             </div>
             <div style="font-size: 180%;float: right;padding-right: 10px;cursor: pointer;">
               <el-tooltip content="保存">
-                <i class="el-icon-upload"></i>
+                <i class="el-icon-upload" @click="SaveNote()"></i>
               </el-tooltip>
             </div>
           </div>
@@ -122,9 +127,10 @@ export default {
       note_search_content: "",
       note_info_list: new Array(4),
       cur_page_note_list: [],
+      cur_note_id: null,
       note_info_list_loading: false,
       cur_page: 1,
-      note_title: "笔记1",
+      note_title: "新笔记",
       note_title_bak: "",
       edit_note_title: false,
       note_info_box_bg: new Array(4).fill("none"),
@@ -146,6 +152,10 @@ export default {
         if (i == index) this.$set(this.note_info_box_bg, i, "#eaf0fb");
         else this.$set(this.note_info_box_bg, i, "none");
       }
+      let cur_note = this.note_info_list[(this.cur_page - 1) * 4 + index];
+      this.editor_data = cur_note.file_content;
+      this.note_title = cur_note.file_name;
+      this.cur_note_id = cur_note._id.$oid;
     },
     MouseOverNoteInfoBox(index) {
       if (this.note_info_box_bg[index] != "#eaf0fb")
@@ -166,6 +176,41 @@ export default {
       this.edit_note_title = false;
       this.note_title = this.note_title_bak;
     },
+    AddNote() {
+      this.cur_note_id = null;
+      this.note_title = "新笔记";
+      this.editor_data = "";
+    },
+    SaveNote() {
+      let user_id = this.user_info.id;
+      this.$axios
+        .post("http://106.54.236.110:8000/note/update", {
+          note_info: {
+            insert_flag: this.cur_note_id == null ? 1 : 0,
+            user_id: user_id,
+            note_id: this.cur_note_id,
+            title: this.note_title,
+            content: this.editor_data
+          }
+        })
+        .then(resp => {
+          let response = resp.data;
+          if (resp.data.status != 200) {
+            this.$message({
+              message: "更新笔记失败：" + resp.data.msg,
+              type: "error"
+            });
+            return;
+          }
+          this.GetAllNote();
+        })
+        .catch(err => {
+          this.$message({
+            message: "更新笔记失败：服务器连接异常",
+            type: "error"
+          });
+        });
+    },
     GetAllNote() {
       let user_id = this.user_info.id;
       this.note_info_list_loading = true;
@@ -184,6 +229,7 @@ export default {
             return;
           }
           this.note_info_list = JSON.parse(response.data);
+          this.cur_page = 1;
           this.CurrentPageChanged(1);
           console.log(this.note_info_list);
         })
@@ -250,6 +296,14 @@ export default {
 .note-info-footer {
   color: gray;
   font-size: small;
+}
+
+.note-info-footer-icons {
+  cursor: pointer;
+}
+
+.note-info-footer-icons:hover {
+  color: deepskyblue;
 }
 
 .note-title {
