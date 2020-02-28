@@ -380,7 +380,7 @@ export default {
     },
     InitTimer() {
       const _this = this;
-      this.timer = interval(10000).subscribe(() => {
+      this.timer = interval(1000).subscribe(() => {
         /*      if (cur_time.getSeconds() % this.auto_fetch_interval == 0) {
           this.GetSheetData();
         }
