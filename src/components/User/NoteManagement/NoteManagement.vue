@@ -50,7 +50,7 @@
                   <div style="float:right" v-if="note_info_box_bg[index] != 'none'">
                     <i class="el-icon-star-off note-info-footer-icons"></i>
                     <i class="el-icon-share note-info-footer-icons"></i>
-                    <i class="el-icon-delete note-info-footer-icons"></i>
+                    <i class="el-icon-delete note-info-footer-icons" @click="DeleteNote(index)"></i>
                   </div>
                 </div>
               </div>
@@ -86,7 +86,7 @@
                   </el-tooltip>
                 </div>
                 <div v-if="edit_note_title">
-                  <el-input style="width: 400px;" placeholder="输入标题" v-model="note_title" />
+                  <el-input style="width: 400px" placeholder="输入标题" v-model="note_title" />
                   <i
                     class="el-icon-circle-check"
                     style="cursor: pointer;font-size: 180%;margin-left: 10px;margin-right: 6px;"
@@ -128,6 +128,7 @@ export default {
       note_info_list: new Array(4),
       cur_page_note_list: [],
       cur_note_id: null,
+      cur_note_index: 0,
       note_info_list_loading: false,
       cur_page: 1,
       note_title: "新笔记",
@@ -152,7 +153,8 @@ export default {
         if (i == index) this.$set(this.note_info_box_bg, i, "#eaf0fb");
         else this.$set(this.note_info_box_bg, i, "none");
       }
-      let cur_note = this.note_info_list[(this.cur_page - 1) * 4 + index];
+      this.cur_note_index = (this.cur_page - 1) * 4 + index;
+      let cur_note = this.note_info_list[this.cur_note_index];
       this.editor_data = cur_note.file_content;
       this.note_title = cur_note.file_name;
       this.cur_note_id = cur_note._id.$oid;
@@ -202,6 +204,10 @@ export default {
             });
             return;
           }
+          this.$message({
+            message: "更新笔记成功",
+            type: "success"
+          });
           this.GetAllNote();
         })
         .catch(err => {
@@ -229,8 +235,7 @@ export default {
             return;
           }
           this.note_info_list = JSON.parse(response.data);
-          this.cur_page = 1;
-          this.CurrentPageChanged(1);
+          this.CurrentPageChanged(this.cur_page);
           console.log(this.note_info_list);
         })
         .catch(err => {
@@ -243,6 +248,11 @@ export default {
     },
     CurrentPageChanged(page_index) {
       this.GetPageNoteList(page_index);
+      for (let i = 0; i < this.note_info_box_bg.length; i++) {
+        if ((this.cur_page - 1) * 4 + i == this.cur_note_index)
+          this.$set(this.note_info_box_bg, i, "#eaf0fb");
+        else this.$set(this.note_info_box_bg, i, "none");
+      }
     },
     GetPageNoteList(page_index) {
       if (this.note_info_list != undefined) {
@@ -257,6 +267,35 @@ export default {
     GetNoteLastModifiedTime(date_time_span) {
       let date = new Date(date_time_span);
       return Moment(date).format("YYYY-MM-DD HH:mm:ss");
+    },
+    DeleteNote(index) {
+      let delete_note_id = this.note_info_list[(this.cur_page - 1) * 4 + index]
+        ._id.$oid;
+      this.$axios
+        .post("http://106.54.236.110:8000/note/delete", {
+          delete_note_id: delete_note_id
+        })
+        .then(resp => {
+          let response = resp.data;
+          if (resp.data.status != 200) {
+            this.$message({
+              message: "删除笔记失败：" + resp.data.msg,
+              type: "error"
+            });
+            return;
+          }
+          this.$message({
+            message: "删除笔记成功",
+            type: "success"
+          });
+          this.GetAllNote();
+        })
+        .catch(err => {
+          this.$message({
+            message: "删除笔记失败：服务器连接异常",
+            type: "error"
+          });
+        });
     },
     /* 去除富文本中的html标签 */
     FetchHtmlContent(richText) {
@@ -309,6 +348,11 @@ export default {
 .note-title {
   font-size: 160%;
   font-weight: 600;
+}
+
+.note-title:hover {
+  padding: 2px 10px;
+  border: 0.5px solid rgb(201, 201, 201);
 }
 
 .ck-editor__editable {
