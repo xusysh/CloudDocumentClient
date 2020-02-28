@@ -2,7 +2,10 @@
   <el-container style="height: 100vh; border: 1px solid #eee">
     <el-aside width="240px" style="background-color:#545c64">
       <div class="avatar-block">
-        <el-avatar :size="100" :src="info.img_url"></el-avatar>
+        <el-avatar
+          :size="100"
+          src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+        ></el-avatar>
         <h3 style="color: rgb(240, 240, 240);">{{ info.name }}</h3>
       </div>
       <el-menu

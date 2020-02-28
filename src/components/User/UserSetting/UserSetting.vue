@@ -135,6 +135,7 @@ export default {
       }
     };
     return {
+      user_info: null,
       nameForm: {
         petName: ""
       },
@@ -151,6 +152,9 @@ export default {
   },
   computed: {
     ...mapState(["userAvaster", "userName", "password"])
+  },
+  mounted() {
+    this.user_info = this.$store.state.userInfo;
   },
   methods: {
     submitForm(formName) {
@@ -191,8 +195,8 @@ export default {
           url = window.webkitURL.createObjectURL(file);
         }
         this.$axios
-          .post("/userInfo/changeImg", {
-            name: this.userName,
+          .post("http://106.54.236.110:8000/userInfo/changeImg", {
+            id: this.user_info.id,
             imgUrl: url
           })
           .then(function(resp) {

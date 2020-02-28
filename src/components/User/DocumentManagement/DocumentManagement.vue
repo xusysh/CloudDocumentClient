@@ -109,14 +109,20 @@
             ></el-table-column>
             <el-table-column label="操作" width="160px">
               <template slot-scope="scope">
-                <el-button size="mini" circle icon="el-icon-view"></el-button>
-                <el-button size="mini" circle icon="el-icon-edit"></el-button>
-                <el-button
-                  size="mini"
-                  type="danger"
-                  circle
-                  icon="el-icon-delete"
-                ></el-button>
+                <el-tooltip effect="dark" content="查看">
+                  <el-button size="mini" circle icon="el-icon-view"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="编辑">
+                  <el-button size="mini" circle icon="el-icon-edit"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="删除">
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    circle
+                    icon="el-icon-delete"
+                  ></el-button>
+                </el-tooltip>
               </template>
             </el-table-column>
           </el-table>
