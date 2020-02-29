@@ -7,93 +7,103 @@
         <el-breadcrumb-item>用户设置</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div>
-      <el-row class="el-row">
-        <el-col :span="6" class="el-col">&nbsp;</el-col>
-        <el-col :span="6">
-          <h3>修改头像</h3>
-          <el-upload
-            class="avatar-uploader"
-            action="#"
-            :show-file-list="false"
-            :before-upload="storeImg"
-          >
-            <img v-if="userAvaster" :src="userAvaster" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="24">&nbsp;</el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="6">&nbsp;</el-col>
-        <el-col :span="12">
-          <h3>修改昵称</h3>
-          <el-form
-            :model="nameForm"
-            label-position="left"
-            status-icon
-            :rules="rules"
-            ref="nameForm"
-            label-width="100px"
-            class="demo-nameForm"
-          >
-            <el-form-item label="昵称" prop="petName">
-              <el-input
-                v-model="nameForm.petName"
-                :placeholder="userName"
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm('nameForm')"
-                >提交</el-button
+    <el-container>
+      <el-aside width="500px">
+        <el-card shadow="hover" style="width: 500px;">
+          <el-row class="el-row">
+            <el-col :span="6" class="el-col">&nbsp;</el-col>
+            <el-col :span="6">
+              <h3>修改头像</h3>
+              <el-upload
+                class="avatar-uploader"
+                action="#"
+                :show-file-list="false"
+                :before-upload="storeImg"
               >
-              <el-button @click="resetForm('nameForm')">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="24">&nbsp;</el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="6">&nbsp;</el-col>
-        <el-col :span="12">
-          <h3>修改密码</h3>
-          <el-form
-            :model="ruleForm"
-            label-position="left"
-            status-icon
-            :rules="rules"
-            ref="ruleForm"
-            label-width="100px"
-            class="demo-ruleForm"
-          >
-            <el-form-item label="新密码" prop="pass">
-              <el-input
-                type="password"
-                v-model="ruleForm.pass"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="checkPass">
-              <el-input
-                type="password"
-                v-model="ruleForm.checkPass"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')"
-                >提交</el-button
+                <img v-if="userAvaster" :src="userAvaster" class="avatar" />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">&nbsp;</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">&nbsp;</el-col>
+            <el-col :span="12">
+              <h3>修改昵称</h3>
+              <el-form
+                :model="nameForm"
+                label-position="left"
+                status-icon
+                :rules="rules"
+                ref="nameForm"
+                label-width="100px"
+                class="demo-nameForm"
               >
-              <el-button @click="resetForm('ruleForm')">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-    </div>
+                <el-form-item label="昵称" prop="petName">
+                  <el-input
+                    v-model="nameForm.petName"
+                    :placeholder="userName"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="submitForm('nameForm')"
+                    >提交</el-button
+                  >
+                  <el-button @click="resetForm('nameForm')">重置</el-button>
+                </el-form-item>
+              </el-form>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-aside>
+
+      <el-main>
+        <el-card shadow="hover" style="width: 500px;">
+          <el-row>
+            <el-col :span="24">&nbsp;</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">&nbsp;</el-col>
+            <el-col :span="12">
+              <h3>修改密码</h3>
+              <el-form
+                :model="ruleForm"
+                label-position="left"
+                status-icon
+                :rules="rules"
+                ref="ruleForm"
+                label-width="100px"
+                class="demo-ruleForm"
+              >
+                <el-form-item label="新密码" prop="pass">
+                  <el-input
+                    type="password"
+                    v-model="ruleForm.pass"
+                    autocomplete="off"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码" prop="checkPass">
+                  <el-input
+                    type="password"
+                    v-model="ruleForm.checkPass"
+                    autocomplete="off"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="submitForm('ruleForm')"
+                    >提交</el-button
+                  >
+                  <el-button @click="resetForm('ruleForm')">重置</el-button>
+                </el-form-item>
+              </el-form>
+            </el-col>
+          </el-row>
+          <div id="myChart" :style="{ width: '300px', height: '300px' }"></div>
+        </el-card>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -155,6 +165,7 @@ export default {
   },
   mounted() {
     this.user_info = this.$store.state.userInfo;
+    this.DrawLine();
   },
   methods: {
     submitForm(formName) {
@@ -207,6 +218,26 @@ export default {
           });
       }
       return false;
+    },
+    DrawLine() {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById("myChart"));
+      // 绘制图表
+      myChart.setOption({
+        title: { text: "在Vue中使用echarts" },
+        tooltip: {},
+        xAxis: {
+          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [
+          {
+            name: "销量",
+            type: "bar",
+            data: [5, 20, 36, 10, 10, 20]
+          }
+        ]
+      });
     }
   }
 };

@@ -11,8 +11,10 @@ import CKEditor from "@CKEditor/ckeditor5-vue";
 import store from "./store/index";
 import axios from "axios";
 import "handsontable/dist/handsontable.full.css";
+import echarts from "echarts";
 
 Vue.prototype.$axios = axios;
+Vue.prototype.$echarts = echarts;
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
