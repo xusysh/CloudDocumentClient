@@ -273,6 +273,10 @@ export default {
   margin-right: 20px;
   cursor: pointer;
 }
+.box-card:hover {
+  transform: scale(1.1);
+}
+
 .clearfix:before,
 .clearfix:after {
   display: table;
