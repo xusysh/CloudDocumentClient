@@ -8,7 +8,7 @@
       </el-breadcrumb>
     </div>
     <el-container>
-      <el-aside width="500px">
+      <el-aside width="600px">
         <el-card shadow="hover" style="width: 500px;">
           <el-row class="el-row">
             <el-col :span="6" class="el-col">&nbsp;</el-col>
@@ -60,7 +60,7 @@
       </el-aside>
 
       <el-main>
-        <el-card shadow="hover" style="width: 500px;">
+        <el-card shadow="hover" style="width: 600px;">
           <el-row>
             <el-col :span="24">&nbsp;</el-col>
           </el-row>
