@@ -322,23 +322,22 @@ export default {
             }
           },
           indicator: [
-            { name: "Web前端", max: 6500 },
-            { name: "Web后端", max: 16000 },
-            { name: "设计模式", max: 30000 },
-            { name: "操作系统", max: 38000 },
-            { name: "编译原理", max: 52000 },
-            { name: "离散数学", max: 25000 }
+            { name: "Web前端", max: 20 },
+            { name: "Web后端", max: 20 },
+            { name: "设计模式", max: 20 },
+            { name: "操作系统", max: 20 },
+            { name: "编译原理", max: 20 },
+            { name: "离散数学", max: 20 }
           ]
         },
         series: [
           {
-            name: "预算 vs 开销（Budget vs spending）",
+            name: "笔记相关知识点",
             type: "radar",
             // areaStyle: {normal: {}},
             data: [
               {
-                value: [4300, 10000, 28000, 35000, 50000, 19000],
-                name: "预算分配（Allocated Budget）"
+                value: [6, 16, 10, 14, 8, 4]
               }
             ]
           }
