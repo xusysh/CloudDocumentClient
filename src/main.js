@@ -12,6 +12,7 @@ import store from "./store/index";
 import axios from "axios";
 import "handsontable/dist/handsontable.full.css";
 import echarts from "echarts";
+import "../node_modules/echarts/map/js/province/beijing.js"; // 引入北京地图数据
 
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;

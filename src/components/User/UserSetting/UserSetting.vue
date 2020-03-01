@@ -8,13 +8,29 @@
       </el-breadcrumb>
     </div>
     <el-container>
-      <el-aside width="600px">
-        <el-card shadow="hover" style="width: 500px;">
+      <el-aside width="560px">
+        <el-card
+          shadow="hover"
+          style="width: 500px;margin-left: 20px;margin-top: 20px;"
+        >
+          <div slot="header" class="clearfix">
+            个人资料管理
+          </div>
           <el-row class="el-row">
-            <el-col :span="6" class="el-col">&nbsp;</el-col>
-            <el-col :span="6">
-              <h3>修改头像</h3>
+            <el-col :span="3" class="el-col">&nbsp;</el-col>
+            <el-col :span="12">
               <el-upload
+                class="upload-demo"
+                drag
+                action="https://jsonplaceholder.typicode.com/posts/"
+                multiple
+              >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">
+                  将头像拖到此处，或<em>点击上传</em>
+                </div>
+              </el-upload>
+              <!--el-upload
                 class="avatar-uploader"
                 action="#"
                 :show-file-list="false"
@@ -22,16 +38,15 @@
               >
                 <img v-if="userAvaster" :src="userAvaster" class="avatar" />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
+              </el-upload-->
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">&nbsp;</el-col>
           </el-row>
           <el-row>
-            <el-col :span="6">&nbsp;</el-col>
-            <el-col :span="12">
-              <h3>修改昵称</h3>
+            <el-col :span="2">&nbsp;</el-col>
+            <el-col :span="20" style="margin-bottom: -16px;">
               <el-form
                 :model="nameForm"
                 label-position="left"
@@ -47,27 +62,38 @@
                     :placeholder="userName"
                   ></el-input>
                 </el-form-item>
+                <el-form-item label="新密码" prop="pass">
+                  <el-input
+                    type="password"
+                    v-model="ruleForm.pass"
+                    autocomplete="off"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码" prop="checkPass">
+                  <el-input
+                    type="password"
+                    v-model="ruleForm.checkPass"
+                    autocomplete="off"
+                  ></el-input>
+                </el-form-item>
                 <el-form-item>
+                  <el-button type="primary" @click="submitForm('ruleForm')"
+                    >提交</el-button
+                  >
+                  <el-button @click="resetForm('ruleForm')">重置</el-button>
+                </el-form-item>
+                <!--el-form-item>
                   <el-button type="primary" @click="submitForm('nameForm')"
                     >提交</el-button
                   >
                   <el-button @click="resetForm('nameForm')">重置</el-button>
-                </el-form-item>
+                </el-form-item-->
               </el-form>
             </el-col>
           </el-row>
-        </el-card>
-      </el-aside>
-
-      <el-main>
-        <el-card shadow="hover" style="width: 600px;">
-          <el-row>
-            <el-col :span="24">&nbsp;</el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">&nbsp;</el-col>
-            <el-col :span="12">
-              <h3>修改密码</h3>
+          <!--el-row>
+            <el-col :span="2">&nbsp;</el-col>
+            <el-col :span="20">
               <el-form
                 :model="ruleForm"
                 label-position="left"
@@ -99,8 +125,14 @@
                 </el-form-item>
               </el-form>
             </el-col>
-          </el-row>
-          <div id="myChart" :style="{ width: '300px', height: '300px' }"></div>
+          </el-row-->
+        </el-card>
+      </el-aside>
+
+      <el-main>
+        <el-card shadow="hover" style="width: 640px;">
+          <div id="myChart" style="width: 600px;height: 260px;"></div>
+          <div id="myChart2" style="width: 600px;height: 260px;"></div>
         </el-card>
       </el-main>
     </el-container>
@@ -222,19 +254,93 @@ export default {
     DrawLine() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart"));
+      let myChart2 = this.$echarts.init(document.getElementById("myChart2"));
+
       // 绘制图表
       myChart.setOption({
-        title: { text: "在Vue中使用echarts" },
-        tooltip: {},
-        xAxis: {
-          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        title: {
+          text: "笔记更新频度统计"
         },
-        yAxis: {},
+        tooltip: {
+          trigger: "axis"
+        },
+        legend: {
+          data: ["单日更新数"]
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataZoom: {
+              yAxisIndex: "none"
+            },
+            dataView: { readOnly: false },
+            magicType: { type: ["line", "bar"] },
+            restore: {},
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+        },
+        yAxis: {
+          type: "value"
+        },
         series: [
           {
-            name: "销量",
-            type: "bar",
-            data: [5, 20, 36, 10, 10, 20]
+            name: "单日更新数",
+            type: "line",
+            data: [2, 8, 10, 4, 2, 8, 6],
+            markPoint: {
+              data: [
+                { type: "max", name: "最大值" },
+                { type: "min", name: "最小值" }
+              ]
+            },
+            markLine: {
+              data: [{ type: "average", name: "平均值" }]
+            }
+          }
+        ]
+      });
+
+      myChart2.setOption({
+        title: {
+          text: "我的笔记内容"
+        },
+        tooltip: {},
+        radar: {
+          // shape: 'circle',
+          radius: 80, //大小
+          name: {
+            textStyle: {
+              color: "#fff",
+              backgroundColor: "#999",
+              borderRadius: 3,
+              padding: [3, 5]
+            }
+          },
+          indicator: [
+            { name: "Web前端", max: 6500 },
+            { name: "Web后端", max: 16000 },
+            { name: "设计模式", max: 30000 },
+            { name: "操作系统", max: 38000 },
+            { name: "编译原理", max: 52000 },
+            { name: "离散数学", max: 25000 }
+          ]
+        },
+        series: [
+          {
+            name: "预算 vs 开销（Budget vs spending）",
+            type: "radar",
+            // areaStyle: {normal: {}},
+            data: [
+              {
+                value: [4300, 10000, 28000, 35000, 50000, 19000],
+                name: "预算分配（Allocated Budget）"
+              }
+            ]
           }
         ]
       });
