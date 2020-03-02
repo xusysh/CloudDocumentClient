@@ -2,23 +2,25 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import App from "./App";
-import router from "./router";
+//先引入第三方组件
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.css";
 import CKEditor from "@CKEditor/ckeditor5-vue";
-import store from "./store/index";
 import axios from "axios";
 import "handsontable/dist/handsontable.full.css";
 import echarts from "echarts";
+//后引入router
+import router from "./router";
+import store from "./store/index";
 
+Vue.use(ElementUI);
+Vue.use(CKEditor);
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
 
 Vue.config.productionTip = false;
-Vue.use(ElementUI);
-Vue.use(CKEditor);
 
 /* eslint-disable no-new */
 new Vue({

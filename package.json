@@ -1,6 +1,7 @@
 {
   "name": "cloud_document_client_2",
   "version": "1.0.0",
+  "main": "main.js",
   "description": "A Vue.js project",
   "author": "gjy gjy <xusysh@126.com>",
   "private": true,
@@ -10,7 +11,11 @@
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "start:electron": "ng build --base-href ./ && electron .",
+    "packWeb": "node build/build.js",
+    "packWin64": "electron-packager . ExamClientElectron --electron-version=7.1.2 --platform=win32 --arch=x64 --asar --overwrite --ignore=node_modules",
+    "buildPackWin64": "node build/build.js --base-href ./ && electron-packager . ExamClientElectron --electron-version=7.1.2 --platform=win32 --arch=x64 --asar --overwrite --ignore=node_modules"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^16.0.0",
