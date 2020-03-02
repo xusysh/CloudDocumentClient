@@ -14,8 +14,8 @@
     "build": "node build/build.js",
     "start:electron": "ng build --base-href ./ && electron .",
     "packWeb": "node build/build.js",
-    "packWin64": "electron-packager . ExamClientElectron --electron-version=7.1.2 --platform=win32 --arch=x64 --asar --overwrite --ignore=node_modules",
-    "buildPackWin64": "node build/build.js --base-href ./ && electron-packager . ExamClientElectron --electron-version=7.1.2 --platform=win32 --arch=x64 --asar --overwrite --ignore=node_modules"
+    "packWin64": "electron-packager . CloudDocumentElectron --electron-version=7.1.2 --platform=win32 --arch=x64 --asar --overwrite --ignore=node_modules",
+    "buildPackWin64": "node build/build.js --base-href ./ && electron-packager . CloudDocumentElectron --electron-version=7.1.2 --platform=win32 --arch=x64 --asar --overwrite --ignore=node_modules"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^16.0.0",
